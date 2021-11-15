@@ -21,11 +21,13 @@ public class MainController {
     private HashMap<String, Shop> shops = new HashMap<>();
 
     public MainController() {
+        // Generate all the shops and store in MainController instance variable
         HashMap<String, Integer> shopsAndCapacity = Shop.SHOPS_AND_CAPACITY;
         for (String shopName : shopsAndCapacity.keySet()) {
             Shop shop = new Shop(shopName, shopsAndCapacity.get(shopName));
             this.shops.put(shopName, shop);
         }
+        // Generate all students by pulling info from student repo (database)
         Iterable<StudentEntity> studentEntities = studentRepository.findAll();
         ArrayList<Student> students = new ArrayList<>();
         for (StudentEntity se : studentEntities) {
@@ -34,6 +36,8 @@ public class MainController {
             String lastName = se.getLastName();
             String email = se.getEmail();
             double exploratoryGrade = se.getExploratoryGrade();
+            // Student entity (SE) shop is the string value of the shop. The specific instance of the shop are stored in shops
+            // instance variable. The string name of the shop is the key to look up the reference to the specific instance of that shop.
             Shop enrolledShop = shops.get(se.getEnrolledShop());
             Shop[] choices = {shops.get(se.getChoice1()), shops.get(se.getChoice2()), shops.get(se.getChoice3()), shops.get(se.getChoice4()), shops.get(se.getChoice5())};
             Student student = new Student(firstName,lastName,studentId,choices, exploratoryGrade);
@@ -44,8 +48,9 @@ public class MainController {
         this.model = new ShopPlacementModel((Student[]) studentArray);
     }
 
+    @SuppressWarnings("unchecked")
     public HashMap<String, Shop> getShops() {
-        return shops;
+        return (HashMap<String, Shop>) shops.clone();
     }
 
     @PostMapping(path="/add") // Map ONLY POST Requests
