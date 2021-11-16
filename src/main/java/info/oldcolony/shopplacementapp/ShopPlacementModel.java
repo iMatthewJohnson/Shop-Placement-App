@@ -38,10 +38,12 @@ public class ShopPlacementModel {
     private Student[] sortStudentsByGrade() {
         rankedStudentList = new ArrayList<>(students.values());
         Collections.sort(rankedStudentList);
-        return (Student[]) rankedStudentList.toArray();
+        Student[] rankedStudentArray = new Student[rankedStudentList.size()];
+        rankedStudentList.toArray(rankedStudentArray);
+        return (rankedStudentArray);
     }
 
     public HashMap<Integer, Student> getStudents() {
-        return (HashMap<Integer, Student>) students.clone();
+        return new HashMap<>(students);
     }
 }
