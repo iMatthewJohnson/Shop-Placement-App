@@ -6,9 +6,8 @@ import java.util.HashMap;
 
 public class ShopPlacementModel {
 
-    private HashMap<String, Student> students = new HashMap<>();
+    private HashMap<Integer, Student> students = new HashMap<>();
     private ArrayList<Student> rankedStudentList;
-
 
 
     public ShopPlacementModel(Student[] students) {
@@ -39,7 +38,10 @@ public class ShopPlacementModel {
     private Student[] sortStudentsByGrade() {
         rankedStudentList = new ArrayList<>(students.values());
         Collections.sort(rankedStudentList);
-        return (Student[]) rankedStudentList.toArray().clone();
+        return (Student[]) rankedStudentList.toArray();
     }
 
+    public HashMap<Integer, Student> getStudents() {
+        return (HashMap<Integer, Student>) students.clone();
+    }
 }

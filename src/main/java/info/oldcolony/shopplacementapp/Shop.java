@@ -55,6 +55,7 @@ public class Shop {
         return (Student[]) studentsEnrolled.toArray().clone();
     }
 
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

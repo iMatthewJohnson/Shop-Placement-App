@@ -1,11 +1,9 @@
 package info.oldcolony.shopplacementapp;
 
-import org.json.*;
-
 public class Student implements Comparable {
     private String firstName;
     private String lastName;
-    private String studentId;
+    private Integer studentId;
     private Shop[] shopChoices;
     private Shop enrolledShop = null;
     private double exploratoryGrade;
@@ -13,7 +11,7 @@ public class Student implements Comparable {
     public static final int MAX_CHOICES = 5;
     private static final double INIT_GRADE = 100.0;
 
-    public Student(String firstName, String lastName, String studentId, Shop[] shopChoices, double exploratoryGrade) {
+    public Student(String firstName, String lastName, Integer studentId, Shop[] shopChoices, double exploratoryGrade) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.studentId = studentId;
@@ -21,7 +19,7 @@ public class Student implements Comparable {
         this.exploratoryGrade = exploratoryGrade;
     }
 
-    public Student(String firstName, String lastName, String studentId) {
+    public Student(String firstName, String lastName, Integer studentId) {
         this(firstName, lastName, studentId, null, INIT_GRADE);
     }
 
@@ -37,7 +35,7 @@ public class Student implements Comparable {
         return firstName + " " + lastName;
     }
 
-    public String getStudentId() {
+    public Integer getStudentId() {
         return studentId;
     }
 
@@ -59,6 +57,10 @@ public class Student implements Comparable {
 
     public void setEnrolledShop(Shop shop) {
         this.enrolledShop = shop;
+    }
+
+    public Shop getEnrolledShop() {
+        return this.enrolledShop;
     }
 
     @Override

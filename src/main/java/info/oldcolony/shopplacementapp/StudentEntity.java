@@ -11,7 +11,7 @@ import java.util.ArrayList;
 @Entity // This tells Hibernate to make a table out of this class
 public class StudentEntity {
     @Id
-    private String studentId;
+    private Integer studentId;
     private String firstName;
     private String lastName;
     private String email;
@@ -47,11 +47,11 @@ public class StudentEntity {
         this.lastName = lastName;
     }
 
-    public String getStudentId() {
+    public Integer getStudentId() {
         return studentId;
     }
 
-    public void setStudentId(String studentId) {
+    public void setStudentId(Integer studentId) {
         this.studentId = studentId;
     }
 
