@@ -2,11 +2,7 @@ package info.oldcolony.shopplacementapp;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
 
-import org.json.*;
-
-import java.util.ArrayList;
 
 @Entity // This tells Hibernate to make a table out of this class
 public class StudentEntity {

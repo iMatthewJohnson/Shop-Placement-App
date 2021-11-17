@@ -5,8 +5,6 @@ import java.util.HashMap;
 import java.util.Objects;
 
 public class Shop {
-    
-    public static final HashMap<String, Integer> SHOPS_AND_CAPACITY = createShopAndCapacityMap();
 
     private final String name;
     private final int capacity;
@@ -16,10 +14,6 @@ public class Shop {
         this.name = shopName;
         this.capacity = shopCapacity;
         this.studentsEnrolled = new ArrayList<>();
-    }
-
-    public Shop(String shopName) {
-        this (shopName, SHOPS_AND_CAPACITY.get(shopName));
     }
 
     public void addStudent(Student student) throws DuplicateEntryException {
@@ -69,11 +63,4 @@ public class Shop {
         return Objects.hash(name);
     }
 
-    private static HashMap<String, Integer> createShopAndCapacityMap() {
-        HashMap<String, Integer> map = new HashMap<>();
-        map.put("Automotive", 12);
-        map.put("Electronics", 8);
-        map.put("Computer Science", 8);
-        return map;
-    }
 }
