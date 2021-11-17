@@ -66,8 +66,8 @@ public class Student implements Comparable {
     @Override
     public int compareTo(Object o) {
         Student otherStudent = (Student) o;
-        if (exploratoryGrade > otherStudent.getExploratoryGrade()) return 1;
-        if (exploratoryGrade < otherStudent.getExploratoryGrade()) return -1;
+        if (exploratoryGrade > otherStudent.getExploratoryGrade()) return -1;
+        if (exploratoryGrade < otherStudent.getExploratoryGrade()) return 1;
         return 0;
     }
 

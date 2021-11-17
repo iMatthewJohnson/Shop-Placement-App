@@ -23,11 +23,11 @@ public class ShopPlacementModel {
         for (Student student : rankedStudentList) {
             int i = 0;
             Shop highestChoice = student.getShopChoiceAtIndex(i);
-            while (highestChoice.isFull()) {
+            while (highestChoice.isFull() && i < 5) {
                 highestChoice = student.getShopChoiceAtIndex(i++);
             }
             try {
-                highestChoice.addStudent(student);
+                if (i < 5) highestChoice.addStudent(student);
             } catch (DuplicateEntryException e) {
                 e.printStackTrace();
             }

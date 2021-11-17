@@ -7,7 +7,6 @@ import org.springframework.web.bind.annotation.*;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
-import java.util.Locale;
 
 @Controller // This means that this class is a Controller
 @RequestMapping(path="/demo") // This means URL's start with /demo (after Application path)
@@ -26,7 +25,7 @@ public class MainController {
 
     public void setup() {
         setupShopModel();
-        createTestStudentData();
+       // createTestStudentData();
         setupStudentModel();
         hasBeenSetup = true;
     }
@@ -96,7 +95,7 @@ public class MainController {
 
     private void createTestStudentData() {
         studentRepository.deleteAll();
-        for (int i = 0; i < 2; i++) {
+        for (int i = 0; i < 150; i++) {
             ArrayList<String> shopList = new ArrayList<>(shops.keySet());
             Collections.shuffle(shopList);
             StudentEntity se = new StudentEntity();
@@ -104,10 +103,12 @@ public class MainController {
             String lastName = FakeNameGenerator.getLastName();
             String email = lastName.toLowerCase() + firstName.toLowerCase().charAt(0) + "@oldcolony.info";
             double exploratoryGrade = Math.random() * 70 + 30;
+            exploratoryGrade = Double.parseDouble(String.format("%.4f", exploratoryGrade));
             String[] shopChoices = new String[5];
             for (int j = 0; j < shopChoices.length; j++) {
                 shopChoices[j] = shopList.get(j);
             }
+            se.setStudentId(i);
             se.setFirstName(firstName);
             se.setLastName(lastName);
             se.setEmail(email);
