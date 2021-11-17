@@ -81,9 +81,13 @@ public class MainController {
         //TODO: Update student repo here by taking info in student objects and updating repo records
         HashMap<Integer, Student> students = model.getStudents();
         for(Integer studentId : students.keySet()) {
-            StudentEntity se = studentRepository.findById(studentId).get();
-            se.setEnrolledShop(students.get(studentId).getEnrolledShop().getName());
-            studentRepository.save(se);
+            Student student = students.get(studentId);
+            if (student.getEnrolledShop() != null) {
+                StudentEntity se = studentRepository.findById(studentId).get();
+
+                se.setEnrolledShop(student.getEnrolledShop().getName());
+                studentRepository.save(se);
+            }
         }
     }
 

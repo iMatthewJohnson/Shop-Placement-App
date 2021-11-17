@@ -28,6 +28,7 @@ public class ShopPlacementModel {
             }
             try {
                 if (i < 5) highestChoice.addStudent(student);
+                else student.setEnrolledShop(null);
             } catch (DuplicateEntryException e) {
                 e.printStackTrace();
             }
