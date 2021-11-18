@@ -29,7 +29,7 @@ public class Shop {
         studentsEnrolled.remove(student);
     }
 
-    public void removeStudent(String studentId) {
+    public void removeStudent(Integer studentId) {
         studentsEnrolled.removeIf(student -> student.getStudentId().equals(studentId));
     }
 

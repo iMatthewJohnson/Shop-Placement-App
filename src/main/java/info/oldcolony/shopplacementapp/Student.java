@@ -11,7 +11,7 @@ public class Student implements Comparable {
     public static final int MAX_CHOICES = 5;
     private static final double INIT_GRADE = 100.0;
 
-    public Student(String firstName, String lastName, Integer studentId, Shop[] shopChoices, double exploratoryGrade) {
+    public Student(Integer studentId, String firstName, String lastName, Shop[] shopChoices, double exploratoryGrade) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.studentId = studentId;
@@ -19,8 +19,8 @@ public class Student implements Comparable {
         this.exploratoryGrade = exploratoryGrade;
     }
 
-    public Student(String firstName, String lastName, Integer studentId) {
-        this(firstName, lastName, studentId, null, INIT_GRADE);
+    public Student(Integer studentId, String firstName, String lastName) {
+        this(studentId, firstName, lastName, null, INIT_GRADE);
     }
 
     public String getFirstName() {
@@ -62,6 +62,7 @@ public class Student implements Comparable {
     public Shop getEnrolledShop() {
         return this.enrolledShop;
     }
+
 
     @Override
     public int compareTo(Object o) {
