@@ -20,9 +20,6 @@ class ShopTest {
         testStudent = new TestStudent();
     }
 
-    @AfterEach
-    void tearDown() {
-    }
 
     @Test
     void addNewStudent() {
@@ -47,14 +44,28 @@ class ShopTest {
 
     @Test
     void removeStudentWithStudentObject() {
+        testShop.addStudent(testStudent);
+        testShop.removeStudent(testStudent);
+        ArrayList<Student> enrolledStudents = new ArrayList<>(List.of(testShop.getStudentsEnrolled()));
+        assertFalse(enrolledStudents.contains(testStudent));
     }
 
     @Test
     void removeStudentWithStudentId() {
+        testShop.addStudent(testStudent);
+        testShop.removeStudent(testStudent.getStudentId());
+        ArrayList<Student> enrolledStudents = new ArrayList<>(List.of(testShop.getStudentsEnrolled()));
+        assertFalse(enrolledStudents.contains(testStudent));
     }
 
     @Test
     void isFull() {
+        for (int i = 0; i < testShop.getCapacity() - 1; i++) {
+            testShop.addStudent(new TestStudent());
+            assertFalse(testShop.isFull());
+        }
+        testShop.addStudent(new TestStudent());
+        assertTrue(testShop.isFull());
     }
 
     @Test
@@ -67,13 +78,5 @@ class ShopTest {
 
     @Test
     void getStudentsEnrolled() {
-    }
-
-    @Test
-    void testEquals() {
-    }
-
-    @Test
-    void testHashCode() {
     }
 }
