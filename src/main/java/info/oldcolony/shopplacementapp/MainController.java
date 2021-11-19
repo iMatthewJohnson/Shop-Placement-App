@@ -97,33 +97,33 @@ public class MainController {
         return studentRepository.findAll();
     }
 
-    private void createTestStudentData() {
-        studentRepository.deleteAll();
-        for (int i = 0; i < 150; i++) {
-            ArrayList<String> shopList = new ArrayList<>(shops.keySet());
-            Collections.shuffle(shopList);
-            StudentEntity se = new StudentEntity();
-            String firstName = FakeNameGenerator.getFirstName();
-            String lastName = FakeNameGenerator.getLastName();
-            String email = lastName.toLowerCase() + firstName.toLowerCase().charAt(0) + "@oldcolony.info";
-            double exploratoryGrade = Math.random() * 70 + 30;
-            exploratoryGrade = Double.parseDouble(String.format("%.4f", exploratoryGrade));
-            String[] shopChoices = new String[5];
-            for (int j = 0; j < shopChoices.length; j++) {
-                shopChoices[j] = shopList.get(j);
-            }
-            se.setStudentId(i);
-            se.setFirstName(firstName);
-            se.setLastName(lastName);
-            se.setEmail(email);
-            se.setExploratoryGrade(exploratoryGrade);
-            int index = 0;
-            se.setChoice1(shopChoices[index++]);
-            se.setChoice2(shopChoices[index++]);
-            se.setChoice3(shopChoices[index++]);
-            se.setChoice4(shopChoices[index++]);
-            se.setChoice5(shopChoices[index]);
-            studentRepository.save(se);
-        }
-    }
+//    private void createTestStudentData() {
+//        studentRepository.deleteAll();
+//        for (int i = 0; i < 150; i++) {
+//            ArrayList<String> shopList = new ArrayList<>(shops.keySet());
+//            Collections.shuffle(shopList);
+//            StudentEntity se = new StudentEntity();
+//            String firstName = FakeNameGenerator.getFirstName();
+//            String lastName = FakeNameGenerator.getLastName();
+//            String email = lastName.toLowerCase() + firstName.toLowerCase().charAt(0) + "@oldcolony.info";
+//            double exploratoryGrade = Math.random() * 70 + 30;
+//            exploratoryGrade = Double.parseDouble(String.format("%.4f", exploratoryGrade));
+//            String[] shopChoices = new String[5];
+//            for (int j = 0; j < shopChoices.length; j++) {
+//                shopChoices[j] = shopList.get(j);
+//            }
+//            se.setStudentId(i);
+//            se.setFirstName(firstName);
+//            se.setLastName(lastName);
+//            se.setEmail(email);
+//            se.setExploratoryGrade(exploratoryGrade);
+//            int index = 0;
+//            se.setChoice1(shopChoices[index++]);
+//            se.setChoice2(shopChoices[index++]);
+//            se.setChoice3(shopChoices[index++]);
+//            se.setChoice4(shopChoices[index++]);
+//            se.setChoice5(shopChoices[index]);
+//            studentRepository.save(se);
+//        }
+//    }
 }

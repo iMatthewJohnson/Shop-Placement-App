@@ -1,6 +1,5 @@
 package info.oldcolony.shopplacementapp;
 
-import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import info.oldcolony.test.testdatageneration.*;
@@ -23,7 +22,6 @@ class ShopTest {
 
     @Test
     void addNewStudent() {
-
         testShop.addStudent(testStudent);
         Student[] students = testShop.getStudentsEnrolled();
         assertSame(students[0], testStudent);
@@ -31,7 +29,6 @@ class ShopTest {
 
     @Test
     void addStudentWhenFull() {
-
         for (int i = 0; i < testShop.getCapacity(); i++) {
             TestStudent testStudent = new TestStudent();
             assertTrue(testShop.addStudent(testStudent));
@@ -70,13 +67,24 @@ class ShopTest {
 
     @Test
     void getName() {
+        String shopName = "Test Shop";
+        Shop testShop = new Shop(shopName, 12);
+        assertEquals(testShop.getName(), shopName);
     }
 
     @Test
     void getCapacity() {
+        Integer randomCapicity = (int) (Math.random() * 20);
+        Shop testShop = new Shop("Test Shop", randomCapicity);
+        assertEquals(randomCapicity, testShop.getCapacity());
     }
 
     @Test
     void getStudentsEnrolled() {
+        Student[] testStudents = TestStudent.generateTestStudents(8);
+        for (Student student : testStudents) {
+            testShop.addStudent(student);
+        }
+        assertArrayEquals(testStudents, testShop.getStudentsEnrolled());
     }
 }

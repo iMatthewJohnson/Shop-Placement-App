@@ -8,7 +8,6 @@ public class Student implements Comparable {
     private Shop enrolledShop = null;
     private double exploratoryGrade;
 
-    public static final int MAX_CHOICES = 5;
     private static final double INIT_GRADE = 100.0;
 
     public Student(Integer studentId, String firstName, String lastName, Shop[] shopChoices, double exploratoryGrade) {
