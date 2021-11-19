@@ -21,16 +21,11 @@ public class ShopPlacementModel {
         //TODO: Main method where all students are sorted into their shop
         Student[] rankedStudentList = sortStudentsByGrade();
         for (Student student : rankedStudentList) {
+            student.setEnrolledShop(null);
             int i = 0;
             Shop highestChoice = student.getShopChoiceAtIndex(i);
-            while (highestChoice.isFull() && i < 5) {
-                highestChoice = student.getShopChoiceAtIndex(i++);
-            }
-            try {
-                if (i < 5) highestChoice.addStudent(student);
-                else student.setEnrolledShop(null);
-            } catch (DuplicateEntryException e) {
-                e.printStackTrace();
+            while(!highestChoice.addStudent(student) && i < 5) {
+                highestChoice = student.getShopChoiceAtIndex(++i);
             }
         }
     }

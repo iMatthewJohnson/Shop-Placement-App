@@ -5,6 +5,9 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import info.oldcolony.test.testdatageneration.*;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 class ShopTest {
@@ -13,8 +16,8 @@ class ShopTest {
 
     @BeforeEach
     void setUp() {
-        testShop = new Shop("Automotive", 12);
-        testStudent = new Student()
+        testShop = new TestShop();
+        testStudent = new TestStudent();
     }
 
     @AfterEach
@@ -23,22 +26,23 @@ class ShopTest {
 
     @Test
     void addNewStudent() {
-        Student newStudent = new Student(500,
-        try {
-            shop.addStudent(newStudent);
-        } catch (DuplicateEntryException e) {
-            e.printStackTrace();
-            fail("Failed to add a student");
-        }
-        Student[] students = shop.getStudentsEnrolled();
-        for (Student student : students) {
 
-        }
+        testShop.addStudent(testStudent);
+        Student[] students = testShop.getStudentsEnrolled();
+        assertSame(students[0], testStudent);
     }
 
     @Test
     void addStudentWhenFull() {
 
+        for (int i = 0; i < testShop.getCapacity(); i++) {
+            TestStudent testStudent = new TestStudent();
+            assertTrue(testShop.addStudent(testStudent));
+        }
+        TestStudent testStudent = new TestStudent();
+        assertFalse(testShop.addStudent(testStudent));
+        ArrayList<Student> enrolledStudents = new ArrayList<>(List.of(testShop.getStudentsEnrolled()));
+        assertFalse(enrolledStudents.contains(testStudent));
     }
 
     @Test

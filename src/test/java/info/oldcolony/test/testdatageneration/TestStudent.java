@@ -1,12 +1,14 @@
 package info.oldcolony.test.testdatageneration;
 
-public class TestStudent {
+import info.oldcolony.shopplacementapp.Student;
+
+public class TestStudent extends Student implements TestablePerson {
 
     private static Integer nextStudentId = 0;
-    private Integer studentId;
 
-    TestStudent() {
-        super();
-        studentId = nextStudentId++;
+
+    public TestStudent() {
+        super(nextStudentId++, TestablePerson.randomFirstName(), TestablePerson.randomLastName());
     }
+
 }

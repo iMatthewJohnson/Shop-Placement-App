@@ -1,7 +1,6 @@
 package info.oldcolony.shopplacementapp;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.Objects;
 
 public class Shop {
@@ -16,13 +15,11 @@ public class Shop {
         this.studentsEnrolled = new ArrayList<>();
     }
 
-    public void addStudent(Student student) throws DuplicateEntryException {
-     if (studentsEnrolled.contains(student)) {
-         throw new DuplicateEntryException("Student already enrolled in shop");
-     } else {
-         studentsEnrolled.add(student);
-         student.setEnrolledShop(this);
-     }
+    public boolean addStudent(Student student) {
+        if (isFull() || studentsEnrolled.contains(student)) return false;
+        studentsEnrolled.add(student);
+        student.setEnrolledShop(this);
+        return true;
     }
 
     public void removeStudent(Student student) {
@@ -46,7 +43,9 @@ public class Shop {
     }
 
     public Student[] getStudentsEnrolled() {
-        return (Student[]) studentsEnrolled.toArray().clone();
+        Student[] studentsEnrolledArray = new Student[studentsEnrolled.size()];
+        studentsEnrolled.toArray(studentsEnrolledArray);
+        return studentsEnrolledArray;
     }
 
 
