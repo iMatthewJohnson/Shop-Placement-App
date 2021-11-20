@@ -1,5 +1,7 @@
 package info.oldcolony.shopplacementapp;
 
+import java.util.Objects;
+
 public class Student implements Comparable {
     private String firstName;
     private String lastName;
@@ -62,6 +64,18 @@ public class Student implements Comparable {
         return this.enrolledShop;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Student student = (Student) o;
+        return firstName.equals(student.firstName) && lastName.equals(student.lastName) && studentId.equals(student.studentId);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(firstName, lastName, studentId);
+    }
 
     @Override
     public int compareTo(Object o) {
