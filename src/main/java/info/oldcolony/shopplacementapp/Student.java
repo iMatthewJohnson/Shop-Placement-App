@@ -12,16 +12,17 @@ public class Student implements Comparable {
 
     private static final double INIT_GRADE = 100.0;
 
-    public Student(Integer studentId, String firstName, String lastName, Shop[] shopChoices, double exploratoryGrade) {
+    public Student(Integer studentId, String firstName, String lastName, Shop[] shopChoices, double exploratoryGrade, Shop enrolledShop) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.studentId = studentId;
         this.shopChoices = shopChoices;
         this.exploratoryGrade = exploratoryGrade;
+        this.enrolledShop = enrolledShop;
     }
 
     public Student(Integer studentId, String firstName, String lastName) {
-        this(studentId, firstName, lastName, null, INIT_GRADE);
+        this(studentId, firstName, lastName, null, INIT_GRADE, null);
     }
 
     public String getFirstName() {
@@ -45,6 +46,8 @@ public class Student implements Comparable {
     }
 
     public void setShopChoiceAtIndex(int index, Shop shopChoice) {
+        // Lazy instantiation
+        if (shopChoices == null) shopChoices = new Shop[5];
         shopChoices[index] = shopChoice;
     }
 

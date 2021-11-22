@@ -5,7 +5,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.HashMap;
 
 @Controller // This means that this class is a Controller
@@ -52,7 +51,7 @@ public class MainController {
             // instance variable. The string name of the shop is the key to look up the reference to the specific instance of that shop.
             Shop enrolledShop = shops.get(se.getEnrolledShop());
             Shop[] choices = {shops.get(se.getChoice1()), shops.get(se.getChoice2()), shops.get(se.getChoice3()), shops.get(se.getChoice4()), shops.get(se.getChoice5())};
-            Student student = new Student(studentId, firstName,lastName, choices, exploratoryGrade);
+            Student student = new Student(studentId, firstName,lastName, choices, exploratoryGrade, null);
             student.setEnrolledShop(enrolledShop);
             students.add(student);
         }

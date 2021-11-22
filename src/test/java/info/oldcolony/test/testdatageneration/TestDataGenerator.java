@@ -14,6 +14,17 @@ public class TestDataGenerator {
         return getRandomInt(max - min) + min;
     }
 
+    public static double getRandomDouble() {
+         return Math.random();
+    }
+
+    public static double getRandomDouble(int max) {
+        return Math.random() * max;
+    }
+
+    public static double getRandomDouble(int min, int max) {
+        return getRandomDouble(max - min) + min;
+    }
 
 
 }
