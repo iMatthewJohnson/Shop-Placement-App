@@ -1,5 +1,9 @@
 package info.oldcolony.test.testdatageneration;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
 public class TestDataGenerator {
 
     public static int getRandomInt() {
@@ -18,13 +22,21 @@ public class TestDataGenerator {
          return Math.random();
     }
 
-    public static double getRandomDouble(int max) {
+    public static double getRandomDouble(long max) {
         return Math.random() * max;
     }
 
-    public static double getRandomDouble(int min, int max) {
+    public static double getRandomDouble(long min, long max) {
         return getRandomDouble(max - min) + min;
     }
 
+    public static Integer[] getRandomArrayOfIntegers(int min, int max) {
+        ArrayList<Integer> list = new ArrayList<>();
+        for (int i = min; i < max; i++) {
+            list.add(i);
+        }
+        Collections.shuffle(list);
+        return list.toArray(new Integer[0]);
+    }
 
 }

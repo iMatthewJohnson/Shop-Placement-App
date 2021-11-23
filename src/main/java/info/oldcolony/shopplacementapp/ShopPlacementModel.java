@@ -18,7 +18,6 @@ public class ShopPlacementModel {
     }
 
     public void placeStudents() {
-        //TODO: Main method where all students are sorted into their shop
         Student[] rankedStudentList = sortStudentsByGrade();
         for (Student student : rankedStudentList) {
             student.setEnrolledShop(null);
@@ -29,7 +28,6 @@ public class ShopPlacementModel {
             }
         }
     }
-
 
     private Student[] sortStudentsByGrade() {
         rankedStudentList = new ArrayList<>(students.values());

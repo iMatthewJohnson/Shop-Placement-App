@@ -77,7 +77,6 @@ public class MainController {
     public void sortUsers() {
         if (!hasBeenSetup) setup();
         model.placeStudents();
-        //TODO: Update student repo here by taking info in student objects and updating repo records
         HashMap<Integer, Student> students = model.getStudents();
         for(Integer studentId : students.keySet()) {
             Student student = students.get(studentId);
