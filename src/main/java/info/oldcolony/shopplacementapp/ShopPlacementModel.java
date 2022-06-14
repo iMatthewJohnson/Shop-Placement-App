@@ -15,6 +15,11 @@ public class ShopPlacementModel {
         for (Student student : students) {
             this.students.put(student.getStudentId(), student);
         }
+
+    }
+
+    public void add(Student student) {
+        this.students.put(student.getStudentId(), student);
     }
 
     public void placeStudents() {

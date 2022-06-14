@@ -1,6 +1,9 @@
 package info.oldcolony.shopplacementapp;
 
+import com.sun.istack.NotNull;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.lang.NonNull;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
@@ -14,30 +17,79 @@ public class MainController {
     private StudentRepository studentRepository;
     @Autowired
     private ShopRepository shopRepository;
-    private ShopPlacementModel model = null;
-    private boolean hasBeenSetup = false;
-    public final HashMap<String, Shop> shops = new HashMap<>();
+    private final ShopPlacementModel model;
+    public final HashMap<String, Shop> shops;
 
+    /**
+     *
+     */
     public MainController() {
-
+        this.shops = createShopModel();
+        this.model = createStudentModel(this.shops);
     }
 
-    public void setup() {
-        setupShopModel();
-       // createTestStudentData();
-        setupStudentModel();
-        hasBeenSetup = true;
+
+    @PostMapping(path="/add")
+    public @ResponseBody String addNewUser (@RequestParam @NonNull String firstName,
+                                            @RequestBody @NonNull String lastName) {
+        // @ResponseBody means the returned String is the response, not a view name
+        // @RequestParam means it is a parameter from the GET or POST request
+
+        StudentEntity n = new StudentEntity();
+        n.setFirstName(firstName);
+        n.setLastName(lastName);
+        StudentEntity se = studentRepository.save(n);
+        Student newStudent = new Student(se.getStudentId(), se.getFirstName(), se.getLastName());
+        model.add(newStudent);
+        return String.format("New User %s %s with ID %d saved", firstName, lastName, se.getStudentId());
     }
 
-    private void setupShopModel() {
-        Iterable<ShopEntity> shopEntities = shopRepository.findAll();
-        for (ShopEntity se : shopEntities) {
-            Shop shop = new Shop(se.getName(), se.getCapacity());
-            this.shops.put(se.getName(), shop);
+    @PutMapping(path="/sort")
+    public void sortUsers() {
+        model.placeStudents();
+        HashMap<Integer, Student> students = model.getStudents();
+        for(Integer studentId : students.keySet()) {
+            Student student = students.get(studentId);
+            if (student.getEnrolledShop() != null) {
+                StudentEntity se = studentRepository.findById(studentId).get();
+
+                se.setEnrolledShop(student.getEnrolledShop().getName());
+                studentRepository.save(se);
+            }
         }
     }
 
-    private void setupStudentModel() {
+    @GetMapping(path="/all")
+    public @ResponseBody Iterable<StudentEntity> getAllUsers() {
+        // This returns a JSON or XML with the users
+        return studentRepository.findAll();
+    }
+
+    /**
+     * Sets up the Shop Model as Java objects. This uses the information found in the ShopEntity database to get the
+     * name and maximum capacity of each shop.
+     * @return HashMap of {@code Shop} objects (using the {@code String} name of the shop as the key for the
+     *         instance of each shop.
+     */
+    private HashMap<String, Shop> createShopModel() {
+        HashMap<String, Shop> shops = new HashMap<>();
+        Iterable<ShopEntity> shopEntities = shopRepository.findAll();
+        for (ShopEntity se : shopEntities) {
+            Shop shop = new Shop(se.getName(), se.getCapacity());
+            shops.put(se.getName(), shop);
+        }
+        return shops;
+    }
+
+    /**
+     * Sets up the Student Model as Java objects. This uses the information in the Student repo (database) to set up
+     * each student as {@code Student} object.
+     * @param shops HashMap of {@code Shop} objects (using the {@code String} name of the shop as the key for the
+     *              instance of each shop.
+     * @return new instance of {@code ShopPlacementModel} with all students and information from Student repo.
+     */
+    private ShopPlacementModel createStudentModel(@NotNull HashMap<String, Shop> shops) throws IllegalArgumentException {
+        if (shops.size() < 1) throw new IllegalArgumentException("Shop model have at least one item");
         // Generate all students by pulling info from student repo (database)
         Iterable<StudentEntity> studentEntities = studentRepository.findAll();
         ArrayList<Student>  students = new ArrayList<>();
@@ -57,42 +109,7 @@ public class MainController {
         }
         Student[] studentArray = new Student[students.size()];
         students.toArray(studentArray);
-        this.model = new ShopPlacementModel(studentArray);
-    }
-
-    @PostMapping(path="/add") // Map ONLY POST Requests
-    public @ResponseBody String addNewUser (@RequestParam String name
-            , @RequestParam String email) {
-        // @ResponseBody means the returned String is the response, not a view name
-        // @RequestParam means it is a parameter from the GET or POST request
-
-        StudentEntity n = new StudentEntity();
-        n.setFirstName(name);
-        n.setEmail(email);
-        studentRepository.save(n);
-        return "Saved";
-    }
-
-    @PutMapping(path="/sort")
-    public void sortUsers() {
-        if (!hasBeenSetup) setup();
-        model.placeStudents();
-        HashMap<Integer, Student> students = model.getStudents();
-        for(Integer studentId : students.keySet()) {
-            Student student = students.get(studentId);
-            if (student.getEnrolledShop() != null) {
-                StudentEntity se = studentRepository.findById(studentId).get();
-
-                se.setEnrolledShop(student.getEnrolledShop().getName());
-                studentRepository.save(se);
-            }
-        }
-    }
-
-    @GetMapping(path="/all")
-    public @ResponseBody Iterable<StudentEntity> getAllUsers() {
-        // This returns a JSON or XML with the users
-        return studentRepository.findAll();
+        return new ShopPlacementModel(studentArray);
     }
 
 //    private void createTestStudentData() {
