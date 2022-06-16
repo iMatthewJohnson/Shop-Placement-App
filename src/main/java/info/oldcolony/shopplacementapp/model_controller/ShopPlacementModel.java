@@ -1,12 +1,15 @@
 package info.oldcolony.shopplacementapp.model_controller;
 
+import com.sun.istack.NotNull;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 
 public class ShopPlacementModel {
 
-    private HashMap<Integer, Student> students;
+    private final HashMap<Integer, Student> students = new HashMap<>();
+    private final static int MAX_SHOP_CHOICE = 5;
 
 
     /**
@@ -20,8 +23,7 @@ public class ShopPlacementModel {
      * Creates a new {@code ShopPlaceMentModel} with a list of {@code Student} objects.
      * @param students The list of students to be added to the model
      */
-    public ShopPlacementModel(Student[] students) {
-        if (students == null) this.students = new HashMap<>();
+    public ShopPlacementModel(@NotNull Student[] students) {
         for (Student student : students) {
             this.students.put(student.getStudentId(), student);
         }
@@ -50,7 +52,7 @@ public class ShopPlacementModel {
             student.setEnrolledShop(null);
             int choice = 0;
             Shop highestChoice = student.getShopChoiceAtIndex(choice);
-            while(!highestChoice.addStudent(student) && choice < 5) {
+            while(!highestChoice.addStudent(student) && choice < MAX_SHOP_CHOICE) {
                 highestChoice = student.getShopChoiceAtIndex(++choice);
             }
         }
@@ -58,9 +60,9 @@ public class ShopPlacementModel {
     }
 
     /**
-     * @return HasMap of all students, where the students' student ids are the keys.
+     * @return HashMap of all students, where the students' student ids are the keys.
      */
-    public HashMap<Integer, Student> getStudents() {
+    public HashMap<Integer, Student> getAllStudents() {
         return new HashMap<>(students);
     }
 

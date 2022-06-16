@@ -12,13 +12,13 @@ public class TestStudent extends Student implements TestablePerson {
         super(nextStudentId++, TestablePerson.randomFirstName(), TestablePerson.randomLastName());
     }
 
-    public static Student[] generateTestStudents(int n) {
-        Student[] testStudents = new Student[n];
+    public static Student[] generateTestStudents(int numberOfStudents) {
+        Student[] testStudents = new Student[numberOfStudents];
         // Ensure all generated students are referring to the same instances of Shop.
         // Generate array of Shop instances of all the shops. This array will be used
         // as a "master list" that the generated students will use
         Shop[] allShops = TestShop.getAllShops();
-        for (int i = 0; i < n; i++) {
+        for (int i = 0; i < numberOfStudents; i++) {
             Student testStudent = new TestStudent();
             testStudent.setExploratoryGrade(TestDataGenerator.getRandomDouble(100));
             // Randomly select 5 shop choices.
@@ -28,7 +28,7 @@ public class TestStudent extends Student implements TestablePerson {
             for (int j = 0; j < 5; j++) {
                 testStudent.setShopChoiceAtIndex(j, allShops[randomIndices[j]]);
             }
-
+            testStudents[i] = testStudent;
         }
         return testStudents;
     }

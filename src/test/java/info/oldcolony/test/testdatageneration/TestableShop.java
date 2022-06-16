@@ -4,12 +4,13 @@ import java.util.HashMap;
 
 public interface TestableShop {
     HashMap<String, Integer> shopsAndCapacity = new HashMap<>();
-    String[] shopNames = {"Automotive Technology", "Business Technology", "CAD", "Computer Science", "Cosmetology",
+    static final String[] SHOP_NAMES = {"Automotive Technology", "Business Technology", "CAD", "Computer Science",
+            "Cosmetology",
             "Culinary Arts", "Electrical", "Electronics", "Graphic Communication", "Health Careers", "Carpentry", "Machine & Tool", "Metal Fabrication"};
 
     static String getRandomShopName() {
-        int randomIndex = (int) (Math.random() * shopNames.length);
-        return shopNames[randomIndex];
+        int randomIndex = (int) (Math.random() * SHOP_NAMES.length);
+        return SHOP_NAMES[randomIndex];
     }
 
     static Integer getRandomShopCapacity() {

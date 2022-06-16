@@ -28,8 +28,8 @@ public class MainController {
      *
      */
     public MainController() {
-        this.shops = createShopModel();
-        this.shopPlacementModel = createStudentModel(this.shops);
+        this.shops = loadShopModel();
+        this.shopPlacementModel = loadStudentModel(this.shops);
     }
 
     /**
@@ -58,7 +58,7 @@ public class MainController {
     @PutMapping(path="/students/sort")
     public void sortStudents() {
         shopPlacementModel.placeStudentsInShops();
-        HashMap<Integer, Student> students = shopPlacementModel.getStudents();
+        HashMap<Integer, Student> students = shopPlacementModel.getAllStudents();
         for(Integer studentId : students.keySet()) {
             Student student = students.get(studentId);
             if (student.getEnrolledShop() != null) {
@@ -69,10 +69,7 @@ public class MainController {
         }
     }
 
-    /**
-     *
-     * @return
-     */
+
     @GetMapping(path="/all")
     public @ResponseBody Iterable<StudentEntity> getAllUsers() {
         // This returns a JSON or XML with the users
@@ -80,29 +77,12 @@ public class MainController {
     }
 
     /**
-     * Sets up the Shop Model as Java objects. This uses the information found in the ShopEntity database to get the
-     * name and maximum capacity of each shop.
-     * @return HashMap of {@code Shop} objects (using the {@code String} name of the shop as the key for the
-     *         instance of each shop.
-     */
-    private HashMap<String, Shop> createShopModel() {
-        HashMap<String, Shop> shops = new HashMap<>();
-        Iterable<ShopEntity> shopEntities = shopRepository.findAll();
-        for (ShopEntity se : shopEntities) {
-            Shop shop = new Shop(se.getName(), se.getCapacity());
-            shops.put(se.getName(), shop);
-        }
-        return shops;
-    }
-
-    /**
-     * Sets up the Student Model as Java objects. This uses the information in the Student repo (database) to set up
-     * each student as {@code Student} object.
+     * Loads the information in the Student repo (database) and loads into the models within the program.
      * @param shops HashMap of {@code Shop} objects (using the {@code String} name of the shop as the key for the
      *              instance of each shop.
      * @return new instance of {@code ShopPlacementModel} with all students and information from Student repo.
      */
-    private ShopPlacementModel createStudentModel(@NotNull HashMap<String, Shop> shops) throws IllegalArgumentException {
+    private ShopPlacementModel loadStudentModel(@NotNull HashMap<String, Shop> shops) throws IllegalArgumentException {
         if (shops.size() < 1) throw new IllegalArgumentException("Shop model have at least one item");
         // Generate all students by pulling info from student repo (database)
         Iterable<StudentEntity> studentEntities = studentRepository.findAll();
@@ -126,33 +106,19 @@ public class MainController {
         return new ShopPlacementModel(studentArray);
     }
 
-//    private void createTestStudentData() {
-//        studentRepository.deleteAll();
-//        for (int i = 0; i < 150; i++) {
-//            ArrayList<String> shopList = new ArrayList<>(shops.keySet());
-//            Collections.shuffle(shopList);
-//            StudentEntity se = new StudentEntity();
-//            String firstName = FakeNameGenerator.getFirstName();
-//            String lastName = FakeNameGenerator.getLastName();
-//            String email = lastName.toLowerCase() + firstName.toLowerCase().charAt(0) + "@oldcolony.info";
-//            double exploratoryGrade = Math.random() * 70 + 30;
-//            exploratoryGrade = Double.parseDouble(String.format("%.4f", exploratoryGrade));
-//            String[] shopChoices = new String[5];
-//            for (int j = 0; j < shopChoices.length; j++) {
-//                shopChoices[j] = shopList.get(j);
-//            }
-//            se.setStudentId(i);
-//            se.setFirstName(firstName);
-//            se.setLastName(lastName);
-//            se.setEmail(email);
-//            se.setExploratoryGrade(exploratoryGrade);
-//            int index = 0;
-//            se.setChoice1(shopChoices[index++]);
-//            se.setChoice2(shopChoices[index++]);
-//            se.setChoice3(shopChoices[index++]);
-//            se.setChoice4(shopChoices[index++]);
-//            se.setChoice5(shopChoices[index]);
-//            studentRepository.save(se);
-//        }
-//    }
+    /**
+     * Sets up the Shop Model as Java objects. This uses the information found in the ShopEntity database to get the
+     * name and maximum capacity of each shop.
+     * @return HashMap of {@code Shop} objects (using the {@code String} name of the shop as the key for the
+     *         instance of each shop.
+     */
+    private HashMap<String, Shop> loadShopModel() {
+        HashMap<String, Shop> shops = new HashMap<>();
+        Iterable<ShopEntity> shopEntities = shopRepository.findAll();
+        for (ShopEntity se : shopEntities) {
+            Shop shop = new Shop(se.getName(), se.getCapacity());
+            shops.put(se.getName(), shop);
+        }
+        return shops;
+    }
 }
