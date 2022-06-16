@@ -1,10 +1,6 @@
 package info.oldcolony.test.testdatageneration;
 
-import info.oldcolony.shopplacementapp.Shop;
-
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import info.oldcolony.shopplacementapp.model_controller.Shop;
 
 public class TestShop extends Shop implements TestableShop {
 

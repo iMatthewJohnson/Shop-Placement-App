@@ -1,5 +1,7 @@
-package info.oldcolony.shopplacementapp;
+package info.oldcolony.shopplacementapp.model_controller;
 
+import info.oldcolony.shopplacementapp.model_controller.Shop;
+import info.oldcolony.shopplacementapp.model_controller.Student;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import info.oldcolony.test.testdatageneration.*;

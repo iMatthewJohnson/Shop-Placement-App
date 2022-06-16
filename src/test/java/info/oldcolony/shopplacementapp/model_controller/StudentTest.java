@@ -1,5 +1,7 @@
-package info.oldcolony.shopplacementapp;
+package info.oldcolony.shopplacementapp.model_controller;
 
+import info.oldcolony.shopplacementapp.model_controller.Shop;
+import info.oldcolony.shopplacementapp.model_controller.Student;
 import info.oldcolony.test.testdatageneration.TestDataGenerator;
 import info.oldcolony.test.testdatageneration.TestShop;
 import info.oldcolony.test.testdatageneration.TestStudent;
@@ -50,7 +52,7 @@ class StudentTest {
         for (int i = 0; i < testShops.length; i++) {
             testShops[i] = new TestShop();
         }
-        Student student = new Student(studentId, firstNane, lastName, testShops, 100, null);
+        Student student = new Student(studentId, firstNane, lastName, testShops, null, null);
         for (int i = 0; i < testShops.length; i++) {
             assertEquals(testShops[i], student.getShopChoiceAtIndex(i));
         }
@@ -90,21 +92,7 @@ class StudentTest {
     @Test
     void getEnrolledShop() {
         Shop testShop = new TestShop();
-        Student testStudent = new Student(studentId, firstNane, lastName, null, 100, testShop);
+        Student testStudent = new Student(studentId, firstNane, lastName, null, null, testShop);
         assertEquals(testShop, testStudent.getEnrolledShop());
-    }
-
-    @Test
-    void compareTo() {
-        Student otherTestStudent = new TestStudent();
-        testStudent.setExploratoryGrade(TestDataGenerator.getRandomDouble(100));
-        otherTestStudent.setExploratoryGrade(TestDataGenerator.getRandomDouble(100));
-        int compareTo = 0;
-        if (testStudent.getExploratoryGrade() > otherTestStudent.getExploratoryGrade()) {
-            compareTo = -1;
-        } else if (testStudent.getExploratoryGrade() < otherTestStudent.getExploratoryGrade()) {
-            compareTo = 1;
-        }
-        assertEquals(testStudent.compareTo(otherTestStudent), compareTo);
     }
 }

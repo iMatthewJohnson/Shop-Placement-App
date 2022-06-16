@@ -1,4 +1,4 @@
-package info.oldcolony.shopplacementapp;
+package info.oldcolony.shopplacementapp.cruds;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;

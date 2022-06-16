@@ -1,7 +1,7 @@
 package info.oldcolony.test.testdatageneration;
 
-import info.oldcolony.shopplacementapp.Shop;
-import info.oldcolony.shopplacementapp.Student;
+import info.oldcolony.shopplacementapp.model_controller.Shop;
+import info.oldcolony.shopplacementapp.model_controller.Student;
 
 public class TestStudent extends Student implements TestablePerson {
 

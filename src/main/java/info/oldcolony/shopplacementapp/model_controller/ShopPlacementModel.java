@@ -1,4 +1,4 @@
-package info.oldcolony.shopplacementapp;
+package info.oldcolony.shopplacementapp.model_controller;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -73,7 +73,7 @@ public class ShopPlacementModel {
 
     private Student[] sortStudentsByGrade() {
         ArrayList<Student> rankedStudentList = new ArrayList<>(students.values()); // ArrayList of all Student objects
-        Collections.sort(rankedStudentList);
+        Collections.sort(rankedStudentList, new Student.ExploratoryGradeCompare());
         Student[] rankedStudentArray = new Student[rankedStudentList.size()];
         rankedStudentList.toArray(rankedStudentArray);
         return (rankedStudentArray);

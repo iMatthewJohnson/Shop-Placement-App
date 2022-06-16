@@ -1,4 +1,4 @@
-package info.oldcolony.shopplacementapp;
+package info.oldcolony.shopplacementapp.model_controller;
 
 import java.util.ArrayList;
 import java.util.Objects;

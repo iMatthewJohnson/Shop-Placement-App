@@ -1,7 +1,11 @@
-package info.oldcolony.shopplacementapp;
+package info.oldcolony.shopplacementapp.model_controller;
 
 import com.sun.istack.NotNull;
 
+import info.oldcolony.shopplacementapp.cruds.ShopEntity;
+import info.oldcolony.shopplacementapp.cruds.ShopRepository;
+import info.oldcolony.shopplacementapp.cruds.StudentEntity;
+import info.oldcolony.shopplacementapp.cruds.StudentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.lang.NonNull;
 import org.springframework.stereotype.Controller;
