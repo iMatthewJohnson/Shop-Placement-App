@@ -11,7 +11,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 @Controller // This means that this class is a Controller
-@RequestMapping(path="/demo") // This means URL's start with /demo (after Application path)
+@RequestMapping(path="/")
 public class MainController {
     @Autowired
     private StudentRepository studentRepository;
@@ -28,37 +28,47 @@ public class MainController {
         this.model = createStudentModel(this.shops);
     }
 
-
-    @PostMapping(path="/add")
-    public @ResponseBody String addNewUser (@RequestParam @NonNull String firstName,
+    /**
+     * Post request that adds new user {@code firstName} and {@code lastName} to Student Repository database and model.
+     * @param firstName first name of student to be added
+     * @param lastName last name of student to be added
+     * @return response body that indicates that new user was saved successfully.
+     */
+    @PostMapping(path="/student/add")
+    public @ResponseBody String addNewStudent(@RequestParam @NonNull String firstName,
                                             @RequestBody @NonNull String lastName) {
         // @ResponseBody means the returned String is the response, not a view name
         // @RequestParam means it is a parameter from the GET or POST request
 
-        StudentEntity n = new StudentEntity();
-        n.setFirstName(firstName);
-        n.setLastName(lastName);
-        StudentEntity se = studentRepository.save(n);
+        StudentEntity se = new StudentEntity();
+        se.setFirstName(firstName);
+        se.setLastName(lastName);
         Student newStudent = new Student(se.getStudentId(), se.getFirstName(), se.getLastName());
         model.add(newStudent);
         return String.format("New User %s %s with ID %d saved", firstName, lastName, se.getStudentId());
     }
 
-    @PutMapping(path="/sort")
-    public void sortUsers() {
+    /**
+     *
+     */
+    @PutMapping(path="/students/sort")
+    public void sortStudents() {
         model.placeStudents();
         HashMap<Integer, Student> students = model.getStudents();
         for(Integer studentId : students.keySet()) {
             Student student = students.get(studentId);
             if (student.getEnrolledShop() != null) {
                 StudentEntity se = studentRepository.findById(studentId).get();
-
                 se.setEnrolledShop(student.getEnrolledShop().getName());
                 studentRepository.save(se);
             }
         }
     }
 
+    /**
+     *
+     * @return
+     */
     @GetMapping(path="/all")
     public @ResponseBody Iterable<StudentEntity> getAllUsers() {
         // This returns a JSON or XML with the users
