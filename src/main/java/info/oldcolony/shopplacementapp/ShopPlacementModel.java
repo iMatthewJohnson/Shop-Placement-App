@@ -10,7 +10,7 @@ public class ShopPlacementModel {
 
 
     /**
-     * Creates a new (@code ShopPlacementModel} with no students added.
+     * Creates a new {@code ShopPlacementModel} with no initial students added.
      */
     public ShopPlacementModel() {
         this(null);
@@ -38,19 +38,37 @@ public class ShopPlacementModel {
     }
 
     /**
-     * 
+     * Enroll students into their shops and returns an array of all the {@code Student} objects. All students must
+     * have an exploratory grade in order to run this method
+     *
      */
-    public Student[] placeStudents() {
+    public Student[] placeStudentsInShops() {
+        if (!allStudentsHaveExploratoryGrade()) throw new IllegalStateException("Not all students have exploratory " +
+                "grades. All students must have an exploratory grade in order to run method");
         Student[] studentList = sortStudentsByGrade();
         for (Student student : studentList) {
             student.setEnrolledShop(null);
-            int i = 0;
-            Shop highestChoice = student.getShopChoiceAtIndex(i);
-            while(!highestChoice.addStudent(student) && i < 5) {
-                highestChoice = student.getShopChoiceAtIndex(++i);
+            int choice = 0;
+            Shop highestChoice = student.getShopChoiceAtIndex(choice);
+            while(!highestChoice.addStudent(student) && choice < 5) {
+                highestChoice = student.getShopChoiceAtIndex(++choice);
             }
         }
         return studentList;
+    }
+
+    /**
+     * @return HasMap of all students, where the students' student ids are the keys.
+     */
+    public HashMap<Integer, Student> getStudents() {
+        return new HashMap<>(students);
+    }
+
+    private boolean allStudentsHaveExploratoryGrade() {
+        for (Student student : students.values()) {
+            if (student.getExploratoryGrade() <= 0) return false;
+        }
+        return true;
     }
 
     private Student[] sortStudentsByGrade() {
@@ -59,9 +77,5 @@ public class ShopPlacementModel {
         Student[] rankedStudentArray = new Student[rankedStudentList.size()];
         rankedStudentList.toArray(rankedStudentArray);
         return (rankedStudentArray);
-    }
-
-    public HashMap<Integer, Student> getStudents() {
-        return new HashMap<>(students);
     }
 }

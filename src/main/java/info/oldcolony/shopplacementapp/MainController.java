@@ -17,7 +17,7 @@ public class MainController {
     private StudentRepository studentRepository;
     @Autowired
     private ShopRepository shopRepository;
-    private final ShopPlacementModel model;
+    private final ShopPlacementModel shopPlacementModel;
     public final HashMap<String, Shop> shops;
 
     /**
@@ -25,7 +25,7 @@ public class MainController {
      */
     public MainController() {
         this.shops = createShopModel();
-        this.model = createStudentModel(this.shops);
+        this.shopPlacementModel = createStudentModel(this.shops);
     }
 
     /**
@@ -44,7 +44,7 @@ public class MainController {
         se.setFirstName(firstName);
         se.setLastName(lastName);
         Student newStudent = new Student(se.getStudentId(), se.getFirstName(), se.getLastName());
-        model.add(newStudent);
+        shopPlacementModel.add(newStudent);
         return String.format("New User %s %s with ID %d saved", firstName, lastName, se.getStudentId());
     }
 
@@ -53,8 +53,8 @@ public class MainController {
      */
     @PutMapping(path="/students/sort")
     public void sortStudents() {
-        model.placeStudents();
-        HashMap<Integer, Student> students = model.getStudents();
+        shopPlacementModel.placeStudentsInShops();
+        HashMap<Integer, Student> students = shopPlacementModel.getStudents();
         for(Integer studentId : students.keySet()) {
             Student student = students.get(studentId);
             if (student.getEnrolledShop() != null) {
