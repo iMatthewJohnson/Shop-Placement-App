@@ -10,10 +10,11 @@ import java.util.Objects;
 public class Student {
     private String firstName;
     private String lastName;
-    private Integer studentId;
+    private final Integer studentId;
     private Shop[] shopChoices;
-    private Shop enrolledShop = null;
-    private double exploratoryGrade;
+    private Shop enrolledShop;
+    // Grade is Double instead of double, so object can be nullable (and checks can be run to check if null or not).
+    private Double exploratoryGrade;
 
     /**
      * Creates new {@code Student} object with provided student ID, first name, last name, a {@code Shop} array of
@@ -55,8 +56,16 @@ public class Student {
         return firstName;
     }
 
+    public void setFirstName(@NotNull String firstName) {
+        this.firstName = firstName;
+    }
+
     public String getLastName() {
         return lastName;
+    }
+
+    public void setLastName(@NotNull String lastName) {
+        this.lastName = lastName;
     }
 
     public String getFullName() {
@@ -67,6 +76,9 @@ public class Student {
         return studentId;
     }
 
+    /**
+     * Returns the student's shop choice at a specific index. The student's xth shop choice, where x is index + 1.
+     */
     public Shop getShopChoiceAtIndex(int index) {
         if (index >= shopChoices.length || index < 0)
             throw new IllegalArgumentException("Index must be greater than or equal to 0, or be less than the maximum" +
@@ -74,13 +86,18 @@ public class Student {
         return shopChoices[index];
     }
 
+    /**
+     * Sets a specified shop at a specified index. The student's xth shop choice, where x is index + 1.
+     * @param index The index to place in student's shop choices
+     * @param shopChoice A {@code Shop} instance that the student is choosing.
+     */
     public void setShopChoiceAtIndex(int index, Shop shopChoice) {
         // Lazy instantiation
         if (shopChoices == null) shopChoices = new Shop[5];
         shopChoices[index] = shopChoice;
     }
 
-    public double getExploratoryGrade() {
+    public Double getExploratoryGrade() {
         return exploratoryGrade;
     }
 
@@ -128,9 +145,7 @@ public class Student {
 
         @Override
         public int compare(Student o1, Student o2) {
-            if (o1.exploratoryGrade > o2.getExploratoryGrade()) return -1;
-            if (o1.exploratoryGrade < o2.getExploratoryGrade()) return 1;
-            return 0;
+            return Double.compare(o1.getExploratoryGrade(), o2.getExploratoryGrade());
         }
     }
 
