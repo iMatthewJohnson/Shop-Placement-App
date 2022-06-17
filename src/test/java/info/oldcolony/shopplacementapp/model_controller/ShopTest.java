@@ -42,6 +42,15 @@ class ShopTest {
     }
 
     @Test
+    void isFull() {
+        for (int i = 0; i < testShop.getCapacity() - 1; i++) {
+            testShop.addStudent(new TestStudent());
+            assertFalse(testShop.isFull());
+        }
+        testShop.addStudent(new TestStudent());
+        assertTrue(testShop.isFull());
+    }
+    @Test
     void removeStudentWithStudentObject() {
         testShop.addStudent(testStudent);
         testShop.removeStudent(testStudent);
@@ -58,32 +67,27 @@ class ShopTest {
     }
 
     @Test
-    void isFull() {
-        for (int i = 0; i < testShop.getCapacity() - 1; i++) {
-            testShop.addStudent(new TestStudent());
-            assertFalse(testShop.isFull());
-        }
-        testShop.addStudent(new TestStudent());
-        assertTrue(testShop.isFull());
-    }
-
-    @Test
     void getName() {
         String shopName = "Test Shop";
-        Shop testShop = new Shop(shopName, 12);
+        int shopCapacity = 12; // arbitrary value
+        Shop testShop = new Shop(shopName, shopCapacity);
         assertEquals(testShop.getName(), shopName);
     }
 
     @Test
     void getCapacity() {
-        Integer randomCapicity = (int) (Math.random() * 20);
-        Shop testShop = new Shop("Test Shop", randomCapicity);
-        assertEquals(randomCapicity, testShop.getCapacity());
+        Integer randomCapacity = (int) (Math.random() * 20);
+        String shopName = "Test Shop";
+        Shop testShop = new Shop(shopName, randomCapacity);
+        assertEquals(randomCapacity, testShop.getCapacity());
     }
 
     @Test
     void getStudentsEnrolled() {
-        Student[] testStudents = TestStudent.generateTestStudents(8);
+        // 8 is the lowest value for capacity. This ensures that the number of students don't exceed any shop's
+        // capacity.
+        int numberOfStudents = 8;
+        Student[] testStudents = TestStudent.generateTestStudents(numberOfStudents);
         for (Student student : testStudents) {
             testShop.addStudent(student);
         }

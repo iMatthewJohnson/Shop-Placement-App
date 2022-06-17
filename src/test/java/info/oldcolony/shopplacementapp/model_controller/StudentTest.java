@@ -32,8 +32,18 @@ class StudentTest {
     }
 
     @Test
+    void setFirstNane() {
+        //TODO
+    }
+
+    @Test
     void getLastName() {
         assertEquals(lastName, testStudent.getLastName());
+    }
+
+    @Test
+    void setLastName() {
+        //TODO
     }
 
     @Test

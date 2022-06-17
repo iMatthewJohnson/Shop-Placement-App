@@ -15,7 +15,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 @Controller // This means that this class is a Controller
-@RequestMapping(path="/")
+@RequestMapping(path="/api/v1/") // All api request paths will be relative "/api/v1/"
 public class MainController {
     @Autowired
     private StudentRepository studentRepository;
@@ -38,7 +38,7 @@ public class MainController {
      * @param lastName last name of student to be added
      * @return response body that indicates that new user was saved successfully.
      */
-    @PostMapping(path="/student/add")
+    @PostMapping(path="users/student/add")
     public @ResponseBody String addNewStudent(@RequestParam @NonNull String firstName,
                                             @RequestBody @NonNull String lastName) {
         // @ResponseBody means the returned String is the response, not a view name
@@ -55,12 +55,12 @@ public class MainController {
     /**
      *
      */
-    @PutMapping(path="/students/sort")
-    public void sortStudents() {
+    @PutMapping(path="/users/students/place_students")
+    public void placeStudentsIntoShops() {
         shopPlacementModel.placeStudentsInShops();
-        HashMap<Integer, Student> students = shopPlacementModel.getAllStudents();
-        for(Integer studentId : students.keySet()) {
-            Student student = students.get(studentId);
+        HashMap<Integer, Student> modelsStudents = shopPlacementModel.getAllStudents();
+        for(Integer studentId : modelsStudents.keySet()) {
+            Student student = modelsStudents.get(studentId);
             if (student.getEnrolledShop() != null) {
                 StudentEntity se = studentRepository.findById(studentId).get();
                 se.setEnrolledShop(student.getEnrolledShop().getName());
@@ -70,7 +70,7 @@ public class MainController {
     }
 
 
-    @GetMapping(path="/all")
+    @GetMapping(path="/users/students")
     public @ResponseBody Iterable<StudentEntity> getAllUsers() {
         // This returns a JSON or XML with the users
         return studentRepository.findAll();
@@ -83,6 +83,8 @@ public class MainController {
      * @return new instance of {@code ShopPlacementModel} with all students and information from Student repo.
      */
     private ShopPlacementModel loadStudentModel(@NotNull HashMap<String, Shop> shops) throws IllegalArgumentException {
+        //TODO: Update to have a shopChoice field in the database that will hold a list of choices in order of
+        // preference. Will need to choose delimiter format and parse through it.
         if (shops.size() < 1) throw new IllegalArgumentException("Shop model have at least one item");
         // Generate all students by pulling info from student repo (database)
         Iterable<StudentEntity> studentEntities = studentRepository.findAll();
@@ -120,5 +122,9 @@ public class MainController {
             shops.put(se.getName(), shop);
         }
         return shops;
+    }
+
+    private void updateDatabase() {
+        //TODO: pushes the states of each object in the model to the database.
     }
 }

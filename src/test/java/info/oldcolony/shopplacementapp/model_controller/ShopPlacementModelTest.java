@@ -32,7 +32,7 @@ class ShopPlacementModelTest {
     }
 
     @Test
-    void getStudents() {
+     void getAllStudents() {
         ShopPlacementModel shopPlacementModel = new ShopPlacementModel(testStudents);
         Object[] modelsStudents = shopPlacementModel.getAllStudents().values().toArray();
         assertTrue(Arrays.equals(testStudents, modelsStudents));
