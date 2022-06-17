@@ -2,6 +2,7 @@ package info.oldcolony.shopplacementapp.model_controller;
 
 import com.sun.istack.NotNull;
 
+import info.oldcolony.shopplacementapp.ModelRepoSyncDelegate;
 import info.oldcolony.shopplacementapp.cruds.ShopEntity;
 import info.oldcolony.shopplacementapp.cruds.ShopRepository;
 import info.oldcolony.shopplacementapp.cruds.StudentEntity;
@@ -15,7 +16,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 @Controller // This means that this class is a Controller
-@RequestMapping(path="/api/v1/") // All api request paths will be relative "/api/v1/"
+@RequestMapping(path="/api/v1") // All api request paths will be relative "/api/v1"
 public class MainController {
     @Autowired
     private StudentRepository studentRepository;
@@ -38,7 +39,7 @@ public class MainController {
      * @param lastName last name of student to be added
      * @return response body that indicates that new user was saved successfully.
      */
-    @PostMapping(path="users/student/add")
+    @PostMapping(path="/users/students/add")
     public @ResponseBody String addNewStudent(@RequestParam @NonNull String firstName,
                                             @RequestBody @NonNull String lastName) {
         // @ResponseBody means the returned String is the response, not a view name
@@ -55,7 +56,7 @@ public class MainController {
     /**
      *
      */
-    @PutMapping(path="/users/students/place_students")
+    @PutMapping(path="/users/students/all/place_students")
     public void placeStudentsIntoShops() {
         shopPlacementModel.placeStudentsInShops();
         HashMap<Integer, Student> modelsStudents = shopPlacementModel.getAllStudents();
@@ -70,7 +71,7 @@ public class MainController {
     }
 
 
-    @GetMapping(path="/users/students")
+    @GetMapping(path="/users/students/all")
     public @ResponseBody Iterable<StudentEntity> getAllUsers() {
         // This returns a JSON or XML with the users
         return studentRepository.findAll();
@@ -124,7 +125,9 @@ public class MainController {
         return shops;
     }
 
-    private void updateDatabase() {
+    private void updateDatabase(ModelRepoSyncDelegate syncDelegate) {
         //TODO: pushes the states of each object in the model to the database.
+        if (syncDelegate == null) return;
+        syncDelegate.sync();
     }
 }

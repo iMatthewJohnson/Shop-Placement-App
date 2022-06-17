@@ -1,9 +1,11 @@
 package info.oldcolony.shopplacementapp.model_controller;
 
+import info.oldcolony.shopplacementapp.SyncableModel;
+
 import java.util.ArrayList;
 import java.util.Objects;
 
-public class Shop {
+public class Shop implements SyncableModel {
 
     private final String name;
     private final int capacity;
