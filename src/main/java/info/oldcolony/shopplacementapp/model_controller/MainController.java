@@ -2,7 +2,6 @@ package info.oldcolony.shopplacementapp.model_controller;
 
 import com.sun.istack.NotNull;
 
-import info.oldcolony.shopplacementapp.ModelRepoSyncDelegate;
 import info.oldcolony.shopplacementapp.cruds.ShopEntity;
 import info.oldcolony.shopplacementapp.cruds.ShopRepository;
 import info.oldcolony.shopplacementapp.cruds.StudentEntity;
@@ -123,11 +122,5 @@ public class MainController {
             shops.put(se.getName(), shop);
         }
         return shops;
-    }
-
-    private void updateDatabase(ModelRepoSyncDelegate syncDelegate) {
-        //TODO: pushes the states of each object in the model to the database.
-        if (syncDelegate == null) return;
-        syncDelegate.sync();
     }
 }

@@ -1,15 +1,13 @@
 package info.oldcolony.shopplacementapp.model_controller;
 
-import info.oldcolony.shopplacementapp.SyncableModel;
-
 import java.util.ArrayList;
 import java.util.Objects;
 
-public class Shop implements SyncableModel {
+public class Shop {
 
     private final String name;
     private final int capacity;
-    private ArrayList<Student> studentsEnrolled;
+    private final ArrayList<Student> studentsEnrolled;
 
     /**
      * Create a new instance {@code Shop} with a name and maximum capacity
@@ -22,9 +20,9 @@ public class Shop implements SyncableModel {
         this.studentsEnrolled = new ArrayList<>();
     }
 
-    /**
+ /**
      * Add a new student to the shop. If the student is already enrolled or the number of students meets or exceeds
-     * the shop's capicity, then the student will not be added.
+     * the shop's capacity, then the student will not be added.
      * @param student The {@code Student} to be enrolled into the shop
      * @return {@code true} if the student is successfully enrolled, {@code false} if the student is not enrolled.
      */
@@ -37,7 +35,7 @@ public class Shop implements SyncableModel {
 
     /**
      * Removes the student that is passed in as an argument from the shop's list of enrolled students.
-     * @param student The @code Student} to be removed from the shop's list of enrolled students.
+     * @param student The {@code Student} to be removed from the shop's list of enrolled students.
      */
     public void removeStudent(Student student) {
         studentsEnrolled.remove(student);
@@ -89,7 +87,7 @@ public class Shop implements SyncableModel {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Shop shop = (Shop) o;
-        return name == shop.name;
+        return name.equals(shop.name);
     }
 
     @Override

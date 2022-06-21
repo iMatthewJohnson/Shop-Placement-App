@@ -4,7 +4,7 @@ import java.util.HashMap;
 
 public interface TestableShop {
     HashMap<String, Integer> shopsAndCapacity = new HashMap<>();
-    static final String[] SHOP_NAMES = {"Automotive Technology", "Business Technology", "CAD", "Computer Science",
+    String[] SHOP_NAMES = {"Automotive Technology", "Business Technology", "CAD", "Computer Science",
             "Cosmetology",
             "Culinary Arts", "Electrical", "Electronics", "Graphic Communication", "Health Careers", "Carpentry", "Machine & Tool", "Metal Fabrication"};
 

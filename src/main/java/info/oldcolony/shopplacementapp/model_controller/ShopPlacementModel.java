@@ -1,13 +1,12 @@
 package info.oldcolony.shopplacementapp.model_controller;
 
 import com.sun.istack.NotNull;
-import info.oldcolony.shopplacementapp.SyncableModel;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 
-public class ShopPlacementModel implements SyncableModel {
+public class ShopPlacementModel {
 
     private final HashMap<Integer, Student> students = new HashMap<>();
     private final static int MAX_SHOP_CHOICE = 5;
