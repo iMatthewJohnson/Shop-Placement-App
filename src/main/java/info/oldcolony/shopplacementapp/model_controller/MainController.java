@@ -14,22 +14,22 @@ import org.springframework.web.bind.annotation.*;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-@Controller // This means that this class is a Controller
+@RestController // This means that this class is a Controller
 @RequestMapping(path="/api/v1") // All api request paths will be relative "/api/v1"
 public class MainController {
     @Autowired
     private StudentRepository studentRepository;
     @Autowired
-    private ShopRepository shopRepository;
-    private final ShopPlacementModel shopPlacementModel;
-    public final HashMap<String, Shop> shops;
+     ShopRepository shopRepository;
+    ShopPlacementModel shopPlacementModel = null;
+    HashMap<String, Shop> shops = null;
 
     /**
      *
      */
     public MainController() {
-        this.shops = loadShopModel();
-        this.shopPlacementModel = loadStudentModel(this.shops);
+//        this.shops = loadShopModel();
+//        this.shopPlacementModel = loadStudentModel(this.shops);
     }
 
     /**

@@ -19,6 +19,16 @@ public class StudentEntity {
     private String enrolledShop = null;
     private double exploratoryGrade;
 
+    public StudentEntity() {
+        super();
+    }
+
+    public StudentEntity(Integer studentId, String firstName, String lastName) {
+        this.studentId = studentId;
+        this.firstName = firstName;
+        this.lastName = lastName;
+    }
+
     public String getFirstName() {
         return firstName;
     }

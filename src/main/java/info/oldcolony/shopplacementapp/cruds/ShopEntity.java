@@ -12,6 +12,10 @@ public class ShopEntity {
     private String name;
     private Integer capacity;
 
+    public ShopEntity(String name, Integer capacity) {
+        this.name = name;
+        this.capacity = capacity;
+    }
     public void setId(Integer id) {
         this.id = id;
     }
