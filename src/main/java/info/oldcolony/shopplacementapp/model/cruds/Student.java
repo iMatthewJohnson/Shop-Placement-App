@@ -1,4 +1,4 @@
-package info.oldcolony.shopplacementapp.cruds;
+package info.oldcolony.shopplacementapp.model.cruds;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -9,19 +9,19 @@ import java.util.List;
 @Table(name="students")
 public class Student {
     @Id
-    private Long studentId;
+    private Integer studentId;
     private String firstName;
     private String lastName;
-    private Long idOfEnrolledShop = null;
-    private Double exploratoryGrade;
+    private Integer idOfEnrolledShop = null;
+    private Double exploratoryGrade = 0.0;
     @ElementCollection
-    private List<Long> idsOfShopChoices;
+    private List<Integer> idsOfShopChoices = null;
 
     public Student() {
         super();
     }
 
-    public Student(Long studentId, String firstName, String lastName) {
+    public Student(Integer studentId, String firstName, String lastName) {
         this.studentId = studentId;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -43,19 +43,19 @@ public class Student {
         this.lastName = lastName;
     }
 
-    public Long getStudentId() {
+    public Integer getStudentId() {
         return studentId;
     }
 
-    public void setStudentId(Long studentId) {
+    public void setStudentId(Integer studentId) {
         this.studentId = studentId;
     }
 
-    public Long getIdOfEnrolledShop() {
+    public Integer getIdOfEnrolledShop() {
         return idOfEnrolledShop;
     }
 
-    public void setIdOfEnrolledShop(Long enrolledShopId) {
+    public void setIdOfEnrolledShop(Integer enrolledShopId) {
         this.idOfEnrolledShop = enrolledShopId;
     }
 
@@ -67,19 +67,19 @@ public class Student {
         this.exploratoryGrade = exploratoryGrade;
     }
 
-    public List<Long> getIdsOfShopChoices() {
-        return new ArrayList<Long>(this.idsOfShopChoices);
+    public List<Integer> getIdsOfShopChoices() {
+        return new ArrayList<Integer>(this.idsOfShopChoices);
     }
 
-    public void setIdsOfShopChoices(List<Long> idsOfShopChoices) {
+    public void setIdsOfShopChoices(List<Integer> idsOfShopChoices) {
         this.idsOfShopChoices = idsOfShopChoices;
     }
 
-    public void setIdOfShopChoiceAtIndex(int index,  Long idOfShopChoice) {
+    public void setIdOfShopChoiceAtIndex(int index, Integer idOfShopChoice) {
         idsOfShopChoices.set(index, idOfShopChoice);
     }
 
-    public Long getIdOfShopChoiceAtIndex(int index) {
+    public Integer getIdOfShopChoiceAtIndex(int index) {
         return idsOfShopChoices.get(index);
     }
 }

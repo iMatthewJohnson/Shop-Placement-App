@@ -1,4 +1,4 @@
-package info.oldcolony.shopplacementapp.cruds;
+package info.oldcolony.shopplacementapp.model.cruds;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -9,11 +9,11 @@ import java.util.List;
 public class Shop {
     @Id
     @GeneratedValue
-    private Long id;
+    private Integer id;
     private String name;
     private Integer capacity;
     @ElementCollection
-    private List<Long> idsOfStudentsEnrolled;
+    private List<Integer> idsOfStudentsEnrolled;
 
     public Shop() {
         super();
@@ -24,7 +24,7 @@ public class Shop {
         this.capacity = capacity;
     }
 
-    public Long getId() {
+    public Integer getId() {
         return id;
     }
 
@@ -44,11 +44,11 @@ public class Shop {
         this.capacity = capacity;
     }
 
-    public List<Long> getIdsOfStudentsEnrolled() {
+    public List<Integer> getIdsOfStudentsEnrolled() {
         return new ArrayList<>(idsOfStudentsEnrolled); // makes copy of ArrayList top avoid modification
     }
 
-    public boolean enrollStudentWithId(Long id) {
+    public boolean enrollStudentWithId(Integer id) {
         if (isFull()) return false;
         if (idsOfStudentsEnrolled.contains(id)) return true;
         idsOfStudentsEnrolled.add(id);

@@ -1,16 +1,17 @@
-package info.oldcolony.shopplacementapp.model_controller;
+package info.oldcolony.shopplacementapp.controllers;
 
 import com.sun.istack.NotNull;
-import info.oldcolony.shopplacementapp.cruds.Student;
+import info.oldcolony.shopplacementapp.model.ShopPlacementModel;
+import info.oldcolony.shopplacementapp.model.cruds.Student;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.lang.NonNull;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.HashMap;
-
-@RestController // This means that this class is a Controller
+@RestController
 @RequestMapping(path="/api/v1") // All api request paths will be relative "/api/v1"
 public class MainController {
-    ShopPlacementModel shopPlacementModel = null;
+    @Autowired
+    protected ShopPlacementModel shopPlacementModel;
 
     /**
      * Post request that adds new user {@code firstName} and {@code lastName} to Student Repository database and model.
@@ -19,7 +20,7 @@ public class MainController {
      * @return response body that indicates that new user was saved successfully.
      */
     @PostMapping(path="/users/students/add")
-    public @ResponseBody String addNewStudent(@RequestParam @NotNull Long id,
+    public @ResponseBody String addNewStudent(@RequestParam @NotNull Integer id,
                                               @RequestParam @NonNull String firstName,
                                             @RequestBody @NonNull String lastName) {
         // @ResponseBody means the returned String is the response, not a view name

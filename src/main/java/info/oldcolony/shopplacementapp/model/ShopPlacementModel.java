@@ -1,13 +1,15 @@
-package info.oldcolony.shopplacementapp.model_controller;
+package info.oldcolony.shopplacementapp.model;
 
-import info.oldcolony.shopplacementapp.cruds.Shop;
-import info.oldcolony.shopplacementapp.cruds.ShopRepository;
-import info.oldcolony.shopplacementapp.cruds.Student;
-import info.oldcolony.shopplacementapp.cruds.StudentRepository;
+import info.oldcolony.shopplacementapp.model.cruds.Shop;
+import info.oldcolony.shopplacementapp.model.cruds.ShopRepository;
+import info.oldcolony.shopplacementapp.model.cruds.Student;
+import info.oldcolony.shopplacementapp.model.cruds.StudentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import java.util.*;
 
+@Component
 public class ShopPlacementModel {
 
     @Autowired
@@ -36,7 +38,7 @@ public class ShopPlacementModel {
         for (Student student : studentList) {
             student.setIdOfEnrolledShop(null);
             int choice = 0;
-            Long highestChoiceId = student.getIdOfShopChoiceAtIndex(choice);
+            Integer highestChoiceId = student.getIdOfShopChoiceAtIndex(choice);
             Optional<Shop> highestChoiceShop = shopRepository.findById(highestChoiceId.intValue());
             while (highestChoiceShop.isPresent() && highestChoiceShop.get().enrollStudentWithId(student.getStudentId())) {
                 highestChoiceId = student.getIdOfShopChoiceAtIndex(++choice);
@@ -48,6 +50,10 @@ public class ShopPlacementModel {
 
     public Iterable<Student> getAllStudents() {
         return studentRepository.findAll();
+    }
+
+    public Optional<Student> getStudentById(Integer id) {
+        return studentRepository.findById(id);
     }
 
 }
