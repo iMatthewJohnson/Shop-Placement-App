@@ -56,4 +56,20 @@ public class ShopPlacementModel {
         return studentRepository.findById(id);
     }
 
+    public void removeStudent(Integer id) {
+        Optional<Student> student = studentRepository.findById(id);
+        // If student exists, remove student from their enrolled shop, and delete student
+        if (student.isPresent()) {
+            Integer enrolledShopId = student.get().getIdOfEnrolledShop();
+            if (enrolledShopId != null) {
+                Optional<Shop> enrolledShop = shopRepository.findById(enrolledShopId);
+                enrolledShop.ifPresent(shop -> shop.unenrollStudentWithId(id));
+            }
+            studentRepository.delete(student.get());
+        }
+    }
+
+    public void updateStudent(Student student) {
+        studentRepository.save(student);
+    }
 }

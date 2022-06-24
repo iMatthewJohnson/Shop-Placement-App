@@ -55,7 +55,7 @@ public class Shop {
         return true;
     }
 
-    public void unenrollStudentWithId(Long id) {
+    public void unenrollStudentWithId(Integer id) {
         idsOfStudentsEnrolled.remove(id);
     }
 
