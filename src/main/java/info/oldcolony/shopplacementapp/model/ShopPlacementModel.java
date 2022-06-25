@@ -110,4 +110,14 @@ public class ShopPlacementModel {
                 student.getExploratoryGrade(),
                 student.getIdsOfShopChoices()));
     }
+
+    public void removeAllStudents() {
+        studentRepository.deleteAll();
+    }
+
+    public List<Student> getStudentsByIds(List<Integer> ids) {
+        List<Student> studentList = new ArrayList<>();
+        ids.forEach(id -> getStudentById(id).ifPresent(studentList::add));
+        return studentList;
+    }
 }

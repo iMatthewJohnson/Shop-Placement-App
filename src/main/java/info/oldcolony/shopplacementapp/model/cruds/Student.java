@@ -16,7 +16,7 @@ public class Student {
     private String firstName;
     private String lastName;
     private Integer idOfEnrolledShop = null;
-    private Double exploratoryGrade = 0.0;
+    private Double exploratoryGrade = null;
     @ElementCollection
     private List<Integer> idsOfShopChoices = null;
 
@@ -71,7 +71,7 @@ public class Student {
         this.idOfEnrolledShop = enrolledShopId;
     }
 
-    public double getExploratoryGrade() {
+    public Double getExploratoryGrade() {
         return exploratoryGrade;
     }
 
