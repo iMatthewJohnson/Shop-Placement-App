@@ -5,6 +5,8 @@ import info.oldcolony.shopplacementapp.model.cruds.ShopRepository;
 import info.oldcolony.shopplacementapp.model.cruds.Student;
 import info.oldcolony.shopplacementapp.model.cruds.StudentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.lang.NonNull;
+import org.springframework.lang.Nullable;
 import org.springframework.stereotype.Component;
 
 import java.util.*;
@@ -23,6 +25,10 @@ public class ShopPlacementModel {
      */
     public void add(Student student) {
         studentRepository.save(student);
+    }
+
+    public void add(List<Student> students) {
+        studentRepository.saveAll(students);
     }
 
     /**
@@ -48,8 +54,11 @@ public class ShopPlacementModel {
         return studentList;
     }
 
-    public Iterable<Student> getAllStudents() {
-        return studentRepository.findAll();
+    public List<Student> getAllStudents() {
+        List<Student> allStudents = new ArrayList<>();
+        Iterable<Student> queriedStudents = studentRepository.findAll();
+        queriedStudents.forEach(allStudents::add);
+        return allStudents;
     }
 
     public Optional<Student> getStudentById(Integer id) {
@@ -69,7 +78,36 @@ public class ShopPlacementModel {
         }
     }
 
-    public void updateStudent(Student student) {
-        studentRepository.save(student);
+    public void removeStudents(List<Integer> ids) {
+        ids.forEach(this::removeStudent);
+    }
+
+    public void updateStudentWithId(@NonNull Integer id,
+                                    @Nullable String firstName,
+                                    @Nullable String lastName,
+                                    @Nullable Integer idOfEnrolledShop,
+                                    @Nullable Double exploratoryGrade,
+                                    @Nullable List<Integer> idsOfShopChoices) {
+       Optional<Student> studentQuery = studentRepository.findById(id);
+       if (studentQuery.isPresent()) {
+           Student student = studentQuery.get();
+           student.setFirstName(firstName);
+           student.setLastName(lastName);
+           student.setIdOfEnrolledShop(idOfEnrolledShop);
+           student.setIdsOfShopChoices(idsOfShopChoices);
+           student.setExploratoryGrade(exploratoryGrade);
+           studentRepository.save(student);
+       }
+    }
+
+
+    public void updateStudents(List<Student> students) {
+        students.forEach(student ->
+                updateStudentWithId(student.getStudentId(),
+                student.getFirstName(),
+                student.getLastName(),
+                student.getStudentId(),
+                student.getExploratoryGrade(),
+                student.getIdsOfShopChoices()));
     }
 }

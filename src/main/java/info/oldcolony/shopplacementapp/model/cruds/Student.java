@@ -1,5 +1,8 @@
 package info.oldcolony.shopplacementapp.model.cruds;
 
+import org.springframework.lang.NonNull;
+import org.springframework.lang.Nullable;
+
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -21,11 +24,20 @@ public class Student {
         super();
     }
 
-    public Student(Integer studentId, String firstName, String lastName) {
+    public Student(@NonNull Integer studentId,
+                   @NonNull String firstName,
+                   @NonNull String lastName,
+                   @Nullable Integer idOfEnrolledShop,
+                   @Nullable Double exploratoryGrade,
+                   @Nullable List<Integer> idsOfShopChoices) {
         this.studentId = studentId;
         this.firstName = firstName;
         this.lastName = lastName;
+        this.idOfEnrolledShop = idOfEnrolledShop;
+        this.exploratoryGrade = exploratoryGrade;
+        this.idsOfShopChoices = idsOfShopChoices;
     }
+
 
     public String getFirstName() {
         return firstName;
@@ -63,7 +75,7 @@ public class Student {
         return exploratoryGrade;
     }
 
-    public void setExploratoryGrade(double exploratoryGrade) {
+    public void setExploratoryGrade(Double exploratoryGrade) {
         this.exploratoryGrade = exploratoryGrade;
     }
 

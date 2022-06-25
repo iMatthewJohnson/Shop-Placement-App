@@ -4,11 +4,16 @@ import info.oldcolony.shopplacementapp.controllers.MainController;
 import info.oldcolony.shopplacementapp.model.cruds.Student;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.Optional;
+
+//TODO: Documentation and testing
 
 @RestController
 @RequestMapping(path="/api/v1/users/students") // All api request paths will be relative "/api/v1/users/students"
 public class StudentController extends MainController {
+
+    // GET requests
 
     @GetMapping(path = "/{id}")
     public Student getStudentById(@PathVariable Integer id) {
@@ -17,37 +22,55 @@ public class StudentController extends MainController {
         return student.get();
     }
 
+    @GetMapping(path = "/all", produces = "application/json")
+    public List<Student> getAllStudents() {
+        return shopPlacementModel.getAllStudents();
+    }
+
+    // POST requests
+
     @PostMapping()
     public void addStudent(@RequestParam(value = "id") Integer id,
                            @RequestParam(value = "firstName") String firstName,
-                           @RequestParam(value = "lastName") String lastName) {
-        Student newStudent = new Student(id, firstName, lastName);
+                           @RequestParam(value = "lastName") String lastName,
+                           @RequestParam(value = "idOfEnrolledShop", required = false) Integer idOfEnrolledShop,
+                           @RequestParam(value = "exploratoryGrade", required = false) Double exploratoryGrade,
+                           @RequestParam(value = "idOfShopChoices", required = false) List<Integer> idsOfShopChoices) {
+        Student newStudent = new Student(id, firstName, lastName, idOfEnrolledShop, exploratoryGrade, idsOfShopChoices);
         shopPlacementModel.add(newStudent);
     }
-    //TODO: Add multiple students by feeding in array of students
+
+    @PostMapping(consumes = "application/json")
+    public void addStudents(@RequestBody List<Student> students) {
+        shopPlacementModel.add(students);
+    }
+
+
+    // DELETE requests
     @DeleteMapping(path = "/{id}")
-    public void removeStudent(@PathVariable Integer id) {
+    public void removeStudentById(@PathVariable Integer id) {
         shopPlacementModel.removeStudent(id);
     }
 
-    //TODO: Remove multiple students by feeding in array of student ids.
-
-    @PatchMapping(path = "/{id}")
-    public void updateStudent(@PathVariable Integer id,
-                              @RequestParam (value = "firstName", defaultValue = "") String firstName,
-                              @RequestParam (value = "lastName", defaultValue = "") String lastName,
-                              @RequestParam (value = "idOfEnrolledShop", defaultValue = "-1") String idOfEnrolledShop,
-                              @RequestParam (value = "exploratoryGrade", defaultValue = "0.0") String exploratoryGrade) {
-        //TODO: Add "IDs of Shop Choices" as RequestParam
-        Optional<Student> student = shopPlacementModel.getStudentById(id);
-        if (student.isPresent()) {
-            if (!firstName.equals("")) student.get().setFirstName(firstName);
-            if (!lastName.equals("")) student.get().setLastName(lastName);
-            if (!idOfEnrolledShop.equals("-1")) student.get().setIdOfEnrolledShop(Integer.parseInt(idOfEnrolledShop));
-            if (!exploratoryGrade.equals("0.0")) student.get().setExploratoryGrade(Double.parseDouble(exploratoryGrade));
-            shopPlacementModel.updateStudent(student.get());
-        }
+    @DeleteMapping()
+    public void removeStudentsByIds(@RequestParam List<Integer> ids) {
+        shopPlacementModel.removeStudents(ids);
     }
 
-    //TODO: Add update multiple students
+    // PATCH requests
+    @PatchMapping(path = "/{id}")
+    public void updateStudent(@PathVariable Integer id,
+                              @RequestParam (value = "firstName", required = false) String firstName,
+                              @RequestParam (value = "lastName", required = false) String lastName,
+                              @RequestParam (value = "idOfEnrolledShop", required = false) Integer idOfEnrolledShop,
+                              @RequestParam (value = "exploratoryGrade", required = false) Double exploratoryGrade,
+                              @RequestParam (value = "idsOfShopChoices", required = false) List<Integer> idsOfShopChoices) {
+        shopPlacementModel.updateStudentWithId(id, firstName, lastName, idOfEnrolledShop, exploratoryGrade,
+                idsOfShopChoices);
+    }
+
+    @PatchMapping(consumes = "application/json")
+    public void updateStudents(@RequestBody List<Student> students) {
+        shopPlacementModel.updateStudents(students);
+    }
 }
