@@ -31,12 +31,12 @@ abstract public class ShopPlacementModel<T extends RepositoryElement> {
         return elements;
     }
 
-    public void add(T entity) {
-        getRepo().save(entity);
+    public T add(T entity) {
+        return getRepo().save(entity);
     }
 
-    public void add(List<T> entities) {
-        getRepo().saveAll(entities);
+    public Iterable<T> add(List<T> entities) {
+        return getRepo().saveAll(entities);
     }
 
 

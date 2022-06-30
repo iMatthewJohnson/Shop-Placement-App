@@ -77,8 +77,13 @@ public class MainController<T extends RepositoryElement> {
      * @param id The student ID of the student to be removed
      */
     @DeleteMapping(path = "/{id}")
-    public void removeElementById(@PathVariable Integer id) {
-        model.remove(id);
+    public T removeElementById(@PathVariable Integer id) {
+        Optional<T> element = model.getElementById(id);
+        if (element.isPresent()) {
+            model.remove(id);
+            return element.get();
+        }
+        return null;
     }
 
     /** Removes students with the provided student ids
@@ -98,18 +103,5 @@ public class MainController<T extends RepositoryElement> {
     }
     //endregion
 
-//    @PutMapping(path="/users/students/all/place_students")
-//    public void placeStudentsIntoShops() {
-//        shopPlacementModel.placeStudentsInShops();
-//        HashMap<Integer, Student> modelsStudents = shopPlacementModel.getAllStudents();
-//        for(Integer studentId : modelsStudents.keySet()) {
-//            Student student = modelsStudents.get(studentId);
-//            if (student.getEnrolledShop() != null) {
-//                StudentEntity se = studentRepository.findById(studentId).get();
-//                se.setIdOfEnrolledShop(student.getEnrolledShop().getName());
-//                studentRepository.save(se);
-//            }
-//        }
-//    }
 
 }

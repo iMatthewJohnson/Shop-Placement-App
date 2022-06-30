@@ -1,6 +1,8 @@
 package info.oldcolony.shopplacementapp.controllers.users;
 
 import info.oldcolony.shopplacementapp.controllers.MainController;
+import info.oldcolony.shopplacementapp.model.shop.Shop;
+import info.oldcolony.shopplacementapp.model.shop.ShopDataModel;
 import info.oldcolony.shopplacementapp.model.student.Student;
 import info.oldcolony.shopplacementapp.model.student.StudentDataModel;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +21,9 @@ public class StudentController extends MainController<Student> {
 
     @Autowired
     StudentDataModel model;
+
+    @Autowired
+    ShopDataModel shopModel;
 
     //region POST requests
 
@@ -40,7 +45,8 @@ public class StudentController extends MainController<Student> {
                            @RequestParam (required = false) Double exploratoryGrade,
                            @RequestParam (required = false) List<Integer> idsOfShopChoices) {
         Student newStudent = new Student(id, firstName, lastName, idOfEnrolledShop, exploratoryGrade, idsOfShopChoices);
-        model.add(newStudent);
+        Student addedStudent = model.add(newStudent);
+        if (idOfEnrolledShop != null) shopModel.enrollStudentInShop(addedStudent, idOfEnrolledShop);
     }
 
     //endregion
@@ -63,10 +69,28 @@ public class StudentController extends MainController<Student> {
                               @RequestParam (required = false) Integer idOfEnrolledShop,
                               @RequestParam (required = false) Double exploratoryGrade,
                               @RequestParam (required = false) List<Integer> idsOfShopChoices) {
-        model.updateStudentWithId(id, firstName, lastName, idOfEnrolledShop, exploratoryGrade,
+        model.update(id, firstName, lastName, idOfEnrolledShop, exploratoryGrade,
                 idsOfShopChoices);
     }
 
     //endregion
+
+    //region DELETE requests
+
+    /**
+     * Removes a student from the application with the provided student's ID
+     * @param id The student ID of the student to be removed
+     */
+    @Override
+    @DeleteMapping(path = "/{id}")
+    public Student removeElementById(@PathVariable Integer id) {
+        Student student = super.removeElementById(id);
+        if (student == null) return null;
+        // If the student was found and removed, we need to also unenroll them from their shop
+        Integer idOfEnrolledShop = student.getIdOfEnrolledShop();
+        Optional<Shop> enrolledShop = shopModel.getElementById(idOfEnrolledShop);
+        if (enrolledShop.isPresent()) shopModel.unenrollStudentInShop(student.getStudentId(), idOfEnrolledShop);
+        return null;
+    }
 
 }

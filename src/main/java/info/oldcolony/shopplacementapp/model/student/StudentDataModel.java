@@ -15,20 +15,20 @@ public class StudentDataModel extends ShopPlacementModel<Student> {
     @Autowired
     StudentRepository studentRepository;
 
-    public void updateStudentWithId(@NonNull Integer id,
-                                    @Nullable String firstName,
-                                    @Nullable String lastName,
-                                    @Nullable Integer idOfEnrolledShop,
-                                    @Nullable Double exploratoryGrade,
-                                    @Nullable List<Integer> idsOfShopChoices) {
+    public void update(@NonNull Integer id,
+                       @Nullable String firstName,
+                       @Nullable String lastName,
+                       @Nullable Integer idOfEnrolledShop,
+                       @Nullable Double exploratoryGrade,
+                       @Nullable List<Integer> idsOfShopChoices) {
         Optional<Student> studentQuery = studentRepository.findById(id);
         if (studentQuery.isPresent()) {
             Student student = studentQuery.get();
-            student.setFirstName(firstName);
-            student.setLastName(lastName);
-            student.setIdOfEnrolledShop(idOfEnrolledShop);
-            student.setIdsOfShopChoices(idsOfShopChoices);
-            student.setExploratoryGrade(exploratoryGrade);
+            if (firstName != null) student.setFirstName(firstName);
+            if (lastName != null)student.setLastName(lastName);
+            if (idOfEnrolledShop != null) student.setIdOfEnrolledShop(idOfEnrolledShop);
+            if (idsOfShopChoices != null) student.setIdsOfShopChoices(idsOfShopChoices);
+            if (exploratoryGrade != null)student.setExploratoryGrade(exploratoryGrade);
             studentRepository.save(student);
         }
     }
@@ -36,7 +36,7 @@ public class StudentDataModel extends ShopPlacementModel<Student> {
     @Override
     public void update(List<Student> students) {
         students.forEach(student ->
-                updateStudentWithId(student.getStudentId(),
+                update(student.getStudentId(),
                         student.getFirstName(),
                         student.getLastName(),
                         student.getStudentId(),
