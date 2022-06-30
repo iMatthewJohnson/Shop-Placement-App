@@ -1,5 +1,6 @@
 package info.oldcolony.shopplacementapp.model;
 
+import info.oldcolony.shopplacementapp.RepositoryElement;
 import info.oldcolony.shopplacementapp.model.student.Student;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.CrudRepository;
@@ -8,9 +9,11 @@ import org.springframework.stereotype.Component;
 import java.util.*;
 
 @Component
-abstract public class ShopPlacementModel<T> {
+abstract public class ShopPlacementModel<T extends RepositoryElement> {
 
     protected abstract CrudRepository<T, Integer> getRepo();
+
+    public abstract void update(List<T> elements);
 
     public List<T> getAll() {
         List<T> all = new ArrayList<>();

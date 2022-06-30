@@ -1,12 +1,14 @@
 package info.oldcolony.shopplacementapp.model.shop;
 
+import info.oldcolony.shopplacementapp.RepositoryElement;
+
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
 @Entity
 @Table(name="shops")
-public class Shop {
+public class Shop implements RepositoryElement {
     @Id
     @GeneratedValue
     private Integer id;

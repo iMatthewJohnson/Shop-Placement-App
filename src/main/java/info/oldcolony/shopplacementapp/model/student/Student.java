@@ -1,5 +1,6 @@
 package info.oldcolony.shopplacementapp.model.student;
 
+import info.oldcolony.shopplacementapp.RepositoryElement;
 import org.springframework.lang.NonNull;
 import org.springframework.lang.Nullable;
 
@@ -10,7 +11,7 @@ import java.util.List;
 
 @Entity
 @Table(name="students")
-public class Student {
+public class Student implements RepositoryElement {
     @Id
     private Integer studentId;
     private String firstName;

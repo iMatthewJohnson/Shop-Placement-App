@@ -20,27 +20,6 @@ public class StudentController extends MainController<Student> {
     @Autowired
     StudentDataModel model;
 
-    /**
-     * Looks up and returns a list of students with the given student IDs
-     * @param ids Student IDs of the students being requested
-     * @return List of {@code Student} objects requested. If a student ID could not be found, it will be omitted from
-     * the list.
-     */
-    @GetMapping(produces = "application/json")
-    public List<Student> getStudentsByIds(@RequestParam (value="ids") List<Integer> ids) {
-        return model.getElementsByIds(ids);
-    }
-
-    /**
-     * Looks up and returns all the {@code Student} objects
-     * @return List of all {@code Student} objects
-     */
-    @GetMapping(path = "/all", produces = "application/json")
-    public List<Student> getAllStudents() {
-        return model.getAll();
-    }
-    //endregion
-
     //region POST requests
 
     /**
@@ -54,24 +33,16 @@ public class StudentController extends MainController<Student> {
      *                         index 0 is 1st choice, index 1 is second choice, etc)
      */
     @PostMapping
-    public void addStudent(@RequestParam(value = "id") Integer id,
-                           @RequestParam(value = "firstName") String firstName,
-                           @RequestParam(value = "lastName") String lastName,
-                           @RequestParam(value = "idOfEnrolledShop", required = false) Integer idOfEnrolledShop,
-                           @RequestParam(value = "exploratoryGrade", required = false) Double exploratoryGrade,
-                           @RequestParam(value = "idOfShopChoices", required = false) List<Integer> idsOfShopChoices) {
+    public void addStudent(@RequestParam Integer id,
+                           @RequestParam String firstName,
+                           @RequestParam String lastName,
+                           @RequestParam (required = false) Integer idOfEnrolledShop,
+                           @RequestParam (required = false) Double exploratoryGrade,
+                           @RequestParam (required = false) List<Integer> idsOfShopChoices) {
         Student newStudent = new Student(id, firstName, lastName, idOfEnrolledShop, exploratoryGrade, idsOfShopChoices);
         model.add(newStudent);
     }
 
-    /**
-     * Takes a list of {@code Student} objects and adds them all to the application
-     * @param students List of {@code Student} objects to be added
-     */
-    @PostMapping(consumes = "application/json")
-    public void addStudents(@RequestBody List<Student> students) {
-        model.add(students);
-    }
     //endregion
 
     //region PATCH requests
@@ -87,50 +58,15 @@ public class StudentController extends MainController<Student> {
      */
     @PatchMapping(path = "/{id}")
     public void updateStudent(@PathVariable Integer id,
-                              @RequestParam (value = "firstName", required = false) String firstName,
-                              @RequestParam (value = "lastName", required = false) String lastName,
-                              @RequestParam (value = "idOfEnrolledShop", required = false) Integer idOfEnrolledShop,
-                              @RequestParam (value = "exploratoryGrade", required = false) Double exploratoryGrade,
-                              @RequestParam (value = "idsOfShopChoices", required = false) List<Integer> idsOfShopChoices) {
+                              @RequestParam (required = false) String firstName,
+                              @RequestParam (required = false) String lastName,
+                              @RequestParam (required = false) Integer idOfEnrolledShop,
+                              @RequestParam (required = false) Double exploratoryGrade,
+                              @RequestParam (required = false) List<Integer> idsOfShopChoices) {
         model.updateStudentWithId(id, firstName, lastName, idOfEnrolledShop, exploratoryGrade,
                 idsOfShopChoices);
     }
 
-    /**
-     * Updates a list of students' information
-     * @param students List of {@code Student} objects with their IDs (required) and the fields that need to be updated.
-     */
-    @PatchMapping(consumes = "application/json")
-    public void updateStudents(@RequestBody List<Student> students) {
-        model.updateStudents(students);
-    }
     //endregion
 
-    //region DELETE requests
-
-    /**
-     * Removes a student from the application with the provided student's ID
-     * @param id The student ID of the student to be removed
-     */
-    @DeleteMapping(path = "/{id}")
-    public void removeStudentById(@PathVariable Integer id) {
-        model.remove(id);
-    }
-
-    /** Removes students with the provided student ids
-     * @param ids A list of student IDs of students who are to be removed
-     */
-    @DeleteMapping
-    public void removeStudentsByIds(@RequestParam List<Integer> ids) {
-        model.remove(ids);
-    }
-
-    /**
-     * Removes all students from application
-     */
-    @DeleteMapping(path = "/all")
-    public void removeAllStudents() {
-        model.removeAll();
-    }
-    //endregion
 }

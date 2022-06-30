@@ -33,7 +33,8 @@ public class StudentDataModel extends ShopPlacementModel<Student> {
         }
     }
 
-    public void updateStudents(List<Student> students) {
+    @Override
+    public void update(List<Student> students) {
         students.forEach(student ->
                 updateStudentWithId(student.getStudentId(),
                         student.getFirstName(),
@@ -42,30 +43,6 @@ public class StudentDataModel extends ShopPlacementModel<Student> {
                         student.getExploratoryGrade(),
                         student.getIdsOfShopChoices()));
     }
-
-
-    //    /**
-    //     * Enroll students into their shops and returns an array of all the {@code Student} objects. All students must
-    //     * have an exploratory grade in order to run this method
-    //     *
-    //     */
-    //    public Collection<Student> placeStudentsInShops() {
-    //        if (studentRepository.findAllUsersWithoutExploratoryGrade().size() > 0) throw new IllegalStateException("Not " +
-    //                "all students have exploratory " +
-    //                "grades. All students must have an exploratory grade in order to run method");
-    //        Collection<Student> studentList = studentRepository.getStudentsOrderedByExploratoryGrade();
-    //        for (Student student : studentList) {
-    //            student.setIdOfEnrolledShop(null);
-    //            int choice = 0;
-    //            Integer highestChoiceId = student.getIdOfShopChoiceAtIndex(choice);
-    //            Optional<Shop> highestChoiceShop = shopRepository.findById(highestChoiceId.intValue());
-    //            while (highestChoiceShop.isPresent() && highestChoiceShop.get().enrollStudentWithId(student.getStudentId())) {
-    //                highestChoiceId = student.getIdOfShopChoiceAtIndex(++choice);
-    //                highestChoiceShop =  shopRepository.findById(highestChoiceId.intValue());
-    //            }
-    //        }
-    //        return studentList;
-    //    }
 
     @Override
     protected StudentRepository getRepo() {

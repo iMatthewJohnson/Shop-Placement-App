@@ -1,5 +1,7 @@
 package info.oldcolony.shopplacementapp.model.admin;
 
+import info.oldcolony.shopplacementapp.RepositoryElement;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -7,7 +9,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name="admins")
-public class Admin {
+public class Admin implements RepositoryElement {
 
     @Id
     @GeneratedValue
