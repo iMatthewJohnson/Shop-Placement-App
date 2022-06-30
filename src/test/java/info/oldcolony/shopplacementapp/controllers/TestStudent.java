@@ -1,6 +1,6 @@
 package info.oldcolony.shopplacementapp.controllers;
 
-import info.oldcolony.shopplacementapp.model.cruds.Student;
+import info.oldcolony.shopplacementapp.model.student.Student;
 import info.oldcolony.test.testdatageneration.TestDataGenerator;
 import org.springframework.beans.factory.annotation.Autowired;
 

@@ -1,123 +1,52 @@
 package info.oldcolony.shopplacementapp.model;
 
-import info.oldcolony.shopplacementapp.model.cruds.Shop;
-import info.oldcolony.shopplacementapp.model.cruds.ShopRepository;
-import info.oldcolony.shopplacementapp.model.cruds.Student;
-import info.oldcolony.shopplacementapp.model.cruds.StudentRepository;
+import info.oldcolony.shopplacementapp.model.student.Student;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.lang.NonNull;
-import org.springframework.lang.Nullable;
+import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Component;
 
 import java.util.*;
 
 @Component
-public class ShopPlacementModel {
+abstract public class ShopPlacementModel<T> {
 
-    @Autowired
-    private StudentRepository studentRepository;
-    @Autowired
-    ShopRepository shopRepository;
+    protected abstract CrudRepository<T, Integer> getRepo();
 
-    /**
-     * Adds a new student to the model
-     * @param student The student to be added to the model
-     */
-    public void add(Student student) {
-        studentRepository.save(student);
+    public List<T> getAll() {
+        List<T> all = new ArrayList<>();
+        Iterable<T> queriedItems = getRepo().findAll();
+        queriedItems.forEach(all::add);
+        return all;
+    }
+    public Optional<T> getElementById(Integer id) {
+        return getRepo().findById(id);
     }
 
-    public void add(List<Student> students) {
-        studentRepository.saveAll(students);
+    public List<T> getElementsByIds(List<Integer> ids) {
+        List<T> elements = new ArrayList<>();
+        ids.forEach(id -> getElementById(id).ifPresent(elements::add));
+        return elements;
     }
 
-    /**
-     * Enroll students into their shops and returns an array of all the {@code Student} objects. All students must
-     * have an exploratory grade in order to run this method
-     *
-     */
-    public Collection<Student> placeStudentsInShops() {
-        if (studentRepository.findAllUsersWithoutExploratoryGrade().size() > 0) throw new IllegalStateException("Not " +
-                "all students have exploratory " +
-                "grades. All students must have an exploratory grade in order to run method");
-        Collection<Student> studentList = studentRepository.getStudentsOrderedByExploratoryGrade();
-        for (Student student : studentList) {
-            student.setIdOfEnrolledShop(null);
-            int choice = 0;
-            Integer highestChoiceId = student.getIdOfShopChoiceAtIndex(choice);
-            Optional<Shop> highestChoiceShop = shopRepository.findById(highestChoiceId.intValue());
-            while (highestChoiceShop.isPresent() && highestChoiceShop.get().enrollStudentWithId(student.getStudentId())) {
-                highestChoiceId = student.getIdOfShopChoiceAtIndex(++choice);
-                highestChoiceShop =  shopRepository.findById(highestChoiceId.intValue());
-            }
-        }
-        return studentList;
+    public void add(T entity) {
+        getRepo().save(entity);
     }
 
-    public List<Student> getAllStudents() {
-        List<Student> allStudents = new ArrayList<>();
-        Iterable<Student> queriedStudents = studentRepository.findAll();
-        queriedStudents.forEach(allStudents::add);
-        return allStudents;
-    }
-
-    public Optional<Student> getStudentById(Integer id) {
-        return studentRepository.findById(id);
-    }
-
-    public void removeStudent(Integer id) {
-        Optional<Student> student = studentRepository.findById(id);
-        // If student exists, remove student from their enrolled shop, and delete student
-        if (student.isPresent()) {
-            Integer enrolledShopId = student.get().getIdOfEnrolledShop();
-            if (enrolledShopId != null) {
-                Optional<Shop> enrolledShop = shopRepository.findById(enrolledShopId);
-                enrolledShop.ifPresent(shop -> shop.unenrollStudentWithId(id));
-            }
-            studentRepository.delete(student.get());
-        }
-    }
-
-    public void removeStudents(List<Integer> ids) {
-        ids.forEach(this::removeStudent);
-    }
-
-    public void updateStudentWithId(@NonNull Integer id,
-                                    @Nullable String firstName,
-                                    @Nullable String lastName,
-                                    @Nullable Integer idOfEnrolledShop,
-                                    @Nullable Double exploratoryGrade,
-                                    @Nullable List<Integer> idsOfShopChoices) {
-       Optional<Student> studentQuery = studentRepository.findById(id);
-       if (studentQuery.isPresent()) {
-           Student student = studentQuery.get();
-           student.setFirstName(firstName);
-           student.setLastName(lastName);
-           student.setIdOfEnrolledShop(idOfEnrolledShop);
-           student.setIdsOfShopChoices(idsOfShopChoices);
-           student.setExploratoryGrade(exploratoryGrade);
-           studentRepository.save(student);
-       }
+    public void add(List<T> entities) {
+        getRepo().saveAll(entities);
     }
 
 
-    public void updateStudents(List<Student> students) {
-        students.forEach(student ->
-                updateStudentWithId(student.getStudentId(),
-                student.getFirstName(),
-                student.getLastName(),
-                student.getStudentId(),
-                student.getExploratoryGrade(),
-                student.getIdsOfShopChoices()));
+    public void remove(Integer id) {
+        getRepo().deleteById(id);
     }
 
-    public void removeAllStudents() {
-        studentRepository.deleteAll();
+    public void remove(List<Integer> ids) {
+        ids.forEach(this::remove);
     }
 
-    public List<Student> getStudentsByIds(List<Integer> ids) {
-        List<Student> studentList = new ArrayList<>();
-        ids.forEach(id -> getStudentById(id).ifPresent(studentList::add));
-        return studentList;
+    public void removeAll() {
+        getRepo().deleteAll();
     }
 }
+

@@ -1,4 +1,4 @@
-package info.oldcolony.shopplacementapp.model.cruds;
+package info.oldcolony.shopplacementapp.model.student;
 
 import org.springframework.lang.NonNull;
 import org.springframework.lang.Nullable;

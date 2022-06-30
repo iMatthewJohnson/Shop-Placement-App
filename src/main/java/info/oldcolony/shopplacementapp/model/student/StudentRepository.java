@@ -1,4 +1,4 @@
-package info.oldcolony.shopplacementapp.model.cruds;
+package info.oldcolony.shopplacementapp.model.student;
 
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;

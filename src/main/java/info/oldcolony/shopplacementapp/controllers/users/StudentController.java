@@ -1,7 +1,9 @@
 package info.oldcolony.shopplacementapp.controllers.users;
 
 import info.oldcolony.shopplacementapp.controllers.MainController;
-import info.oldcolony.shopplacementapp.model.cruds.Student;
+import info.oldcolony.shopplacementapp.model.student.Student;
+import info.oldcolony.shopplacementapp.model.student.StudentDataModel;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -13,19 +15,10 @@ import java.util.Optional;
  */
 @RestController
 @RequestMapping(path="/api/v1/users/students") // All api request paths will be relative "/api/v1/users/students"
-public class StudentController extends MainController {
+public class StudentController extends MainController<Student> {
 
-    //region GET requests
-    /**
-     * Looks up and returns a {@code Student} object with a given student ID
-     * @param id Student ID of the student that is being requested
-     * @return {@code Student} object of student requested
-     */
-    @GetMapping(path = "/{id}")
-    public Student getStudentById(@PathVariable Integer id) {
-        Optional<Student> student = shopPlacementModel.getStudentById(id);
-        return student.get();
-    }
+    @Autowired
+    StudentDataModel model;
 
     /**
      * Looks up and returns a list of students with the given student IDs
@@ -35,7 +28,7 @@ public class StudentController extends MainController {
      */
     @GetMapping(produces = "application/json")
     public List<Student> getStudentsByIds(@RequestParam (value="ids") List<Integer> ids) {
-        return shopPlacementModel.getStudentsByIds(ids);
+        return model.getElementsByIds(ids);
     }
 
     /**
@@ -44,7 +37,7 @@ public class StudentController extends MainController {
      */
     @GetMapping(path = "/all", produces = "application/json")
     public List<Student> getAllStudents() {
-        return shopPlacementModel.getAllStudents();
+        return model.getAll();
     }
     //endregion
 
@@ -68,7 +61,7 @@ public class StudentController extends MainController {
                            @RequestParam(value = "exploratoryGrade", required = false) Double exploratoryGrade,
                            @RequestParam(value = "idOfShopChoices", required = false) List<Integer> idsOfShopChoices) {
         Student newStudent = new Student(id, firstName, lastName, idOfEnrolledShop, exploratoryGrade, idsOfShopChoices);
-        shopPlacementModel.add(newStudent);
+        model.add(newStudent);
     }
 
     /**
@@ -77,7 +70,7 @@ public class StudentController extends MainController {
      */
     @PostMapping(consumes = "application/json")
     public void addStudents(@RequestBody List<Student> students) {
-        shopPlacementModel.add(students);
+        model.add(students);
     }
     //endregion
 
@@ -99,7 +92,7 @@ public class StudentController extends MainController {
                               @RequestParam (value = "idOfEnrolledShop", required = false) Integer idOfEnrolledShop,
                               @RequestParam (value = "exploratoryGrade", required = false) Double exploratoryGrade,
                               @RequestParam (value = "idsOfShopChoices", required = false) List<Integer> idsOfShopChoices) {
-        shopPlacementModel.updateStudentWithId(id, firstName, lastName, idOfEnrolledShop, exploratoryGrade,
+        model.updateStudentWithId(id, firstName, lastName, idOfEnrolledShop, exploratoryGrade,
                 idsOfShopChoices);
     }
 
@@ -109,7 +102,7 @@ public class StudentController extends MainController {
      */
     @PatchMapping(consumes = "application/json")
     public void updateStudents(@RequestBody List<Student> students) {
-        shopPlacementModel.updateStudents(students);
+        model.updateStudents(students);
     }
     //endregion
 
@@ -121,7 +114,7 @@ public class StudentController extends MainController {
      */
     @DeleteMapping(path = "/{id}")
     public void removeStudentById(@PathVariable Integer id) {
-        shopPlacementModel.removeStudent(id);
+        model.remove(id);
     }
 
     /** Removes students with the provided student ids
@@ -129,7 +122,7 @@ public class StudentController extends MainController {
      */
     @DeleteMapping
     public void removeStudentsByIds(@RequestParam List<Integer> ids) {
-        shopPlacementModel.removeStudents(ids);
+        model.remove(ids);
     }
 
     /**
@@ -137,7 +130,7 @@ public class StudentController extends MainController {
      */
     @DeleteMapping(path = "/all")
     public void removeAllStudents() {
-        shopPlacementModel.removeAllStudents();
+        model.removeAll();
     }
     //endregion
 }

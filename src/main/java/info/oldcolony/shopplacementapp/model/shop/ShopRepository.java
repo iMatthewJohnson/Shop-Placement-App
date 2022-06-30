@@ -1,4 +1,4 @@
-package info.oldcolony.shopplacementapp.model.cruds;
+package info.oldcolony.shopplacementapp.model.shop;
 
 import org.springframework.data.repository.CrudRepository;
 

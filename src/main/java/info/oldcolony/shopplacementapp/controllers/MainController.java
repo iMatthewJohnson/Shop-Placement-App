@@ -1,20 +1,28 @@
 package info.oldcolony.shopplacementapp.controllers;
 
-import com.sun.istack.NotNull;
 import info.oldcolony.shopplacementapp.model.ShopPlacementModel;
-import info.oldcolony.shopplacementapp.model.cruds.Student;
+import info.oldcolony.shopplacementapp.model.student.Student;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.lang.NonNull;
-import org.springframework.lang.Nullable;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
+import java.util.Optional;
 
-@RestController
-@RequestMapping(path="/api/v1") // All api request paths will be relative "/api/v1"
-public class MainController {
+public class MainController<T> {
+
     @Autowired
-    protected ShopPlacementModel shopPlacementModel;
+    ShopPlacementModel<T> model;
+
+    //region GET requests
+    /**
+     * Looks up and returns a {@code Student} object with a given student ID
+     * @param id Student ID of the student that is being requested
+     * @return {@code Student} object of student requested
+     */
+    @GetMapping(path = "/{id}")
+    public T getById(@PathVariable Integer id) {
+        Optional<T> element = model.getElementById(id);
+        return element.get();
+    }
 
     /**
      *

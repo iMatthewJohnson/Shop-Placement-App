@@ -1,7 +1,7 @@
 package info.oldcolony.shopplacementapp.controllers;
 
 
-import info.oldcolony.shopplacementapp.model.cruds.Shop;
+import info.oldcolony.shopplacementapp.model.shop.Shop;
 import info.oldcolony.test.testdatageneration.TestDataGenerator;
 import org.springframework.beans.factory.annotation.Autowired;
 
