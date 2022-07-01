@@ -25,11 +25,11 @@ public class ShopDataModel extends ShopPlacementModel<Shop> {
 
     }
 
-    public void enrollStudentInShop(Student student, Integer shopId) {
+    public void enrollStudentInShop(Student studentId, Integer shopId) {
         Optional<Shop> shop = shopRepository.findById(shopId);
         if (shop.isPresent()) {
             Shop theShop = shop.get();
-            theShop.enrollStudentWithId(student.getStudentId());
+            theShop.enrollStudentWithId(studentId.getStudentId());
             shopRepository.save(theShop);
         }
     }

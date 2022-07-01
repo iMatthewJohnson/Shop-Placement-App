@@ -12,7 +12,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-@Table(name="test_shops")
 public class TestShop extends Shop implements TestableShop {
 
     @Autowired

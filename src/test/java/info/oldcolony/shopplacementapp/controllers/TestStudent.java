@@ -11,7 +11,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-@Table(name="test_students")
 public class TestStudent extends Student implements TestablePerson {
 
     private static Integer nextStudentId = 0;
@@ -20,7 +19,8 @@ public class TestStudent extends Student implements TestablePerson {
     private static TestStudentRepository testStudentRepository;
 
     public TestStudent() {
-        super(nextStudentId++, TestablePerson.randomFirstName(), TestablePerson.randomLastName());
+        super(nextStudentId++, TestablePerson.randomFirstName(), TestablePerson.randomLastName(), null, null
+        , null);
     }
 
     public static Integer getNextStudentId() {

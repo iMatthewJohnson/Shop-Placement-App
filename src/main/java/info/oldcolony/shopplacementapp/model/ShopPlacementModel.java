@@ -51,5 +51,6 @@ abstract public class ShopPlacementModel<T extends RepositoryElement> {
     public void removeAll() {
         getRepo().deleteAll();
     }
+
 }
 
