@@ -5,7 +5,6 @@ import info.oldcolony.test.testdatageneration.TestDataGenerator;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.persistence.Entity;
-import javax.persistence.Table;
 import javax.persistence.Transient;
 import java.util.ArrayList;
 import java.util.List;
@@ -13,7 +12,7 @@ import java.util.List;
 @Entity
 public class TestStudent extends Student implements TestablePerson {
 
-    private static Integer nextStudentId = 0;
+    private static Integer nextStudentId = 1000000000; //high enough number to not interfere with actual students' ids
     @Transient
     @Autowired
     private static TestStudentRepository testStudentRepository;
@@ -27,22 +26,19 @@ public class TestStudent extends Student implements TestablePerson {
         return nextStudentId++;
     }
 
-    public static void generateTestStudents(int numberOfStudents) {
-        testStudentRepository.deleteAll();
-        List<TestShop> allShops = TestShop.getAllShops();
-        List<TestStudent> allStudents = new ArrayList<>(); // Create a list of students, and the make one "save" call at
-        // the end
+    public static List<TestStudent> generateTestStudents(int numberOfStudents) {
+        final int NUMBER_OF_SHOPS = 13;
+        List<TestStudent> allStudents = new ArrayList<>();
         for (int i = 0; i < numberOfStudents; i++) {
             TestStudent testStudent = new TestStudent();
             testStudent.setExploratoryGrade(TestDataGenerator.getRandomDouble(100));
-            Integer[] randomIndices = TestDataGenerator.getRandomArrayOfIntegers(0, allShops.size());
+            Integer[] randomIndices = TestDataGenerator.getRandomArrayOfIntegers(0, NUMBER_OF_SHOPS);
             for (int j = 0; j < randomIndices.length; j++) {
-                int index = randomIndices[j];
-                testStudent.setIdOfShopChoiceAtIndex(j, allShops.get(index).getId());
-                allStudents.add(testStudent);
+                testStudent.setIdOfShopChoiceAtIndex(j, randomIndices[j]);
             }
+            allStudents.add(testStudent);
         }
-        testStudentRepository.saveAll(allStudents);
+        return allStudents;
     }
 
 }

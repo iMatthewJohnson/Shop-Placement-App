@@ -53,7 +53,7 @@ public class MainController<T extends RepositoryElement> {
      * @param elements List of {@code Student} objects to be added
      */
     @PostMapping(consumes = "application/json")
-    public void addStudents(@RequestBody List<T> elements) {
+    public void add(@RequestBody List<T> elements) {
         model.add(elements);
     }
     //endregion

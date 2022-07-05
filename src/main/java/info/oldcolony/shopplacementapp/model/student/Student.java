@@ -1,12 +1,14 @@
 package info.oldcolony.shopplacementapp.model.student;
 
 import info.oldcolony.shopplacementapp.RepositoryElement;
+import org.json.JSONObject;
 import org.springframework.lang.NonNull;
 import org.springframework.lang.Nullable;
 
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 
 @Entity
@@ -85,14 +87,93 @@ public class Student implements RepositoryElement {
     }
 
     public void setIdsOfShopChoices(List<Integer> idsOfShopChoices) {
+        if (idsOfShopChoices == null) idsOfShopChoices = new ArrayList<>();
         this.idsOfShopChoices = idsOfShopChoices;
     }
 
     public void setIdOfShopChoiceAtIndex(int index, Integer idOfShopChoice) {
+        if (idsOfShopChoices == null) idsOfShopChoices = new ArrayList<>();
+        if (index == idsOfShopChoices.size()) idsOfShopChoices.add(index, idOfShopChoice);
+        // if the size of the list of idsOfShopChoices is less than or equal to the index, then fill in the elements
+        // in between the last element and the element being added, with null
+        if (index > idsOfShopChoices.size()) {
+            for (int i = idsOfShopChoices.size(); i <= index; i++) {
+                idsOfShopChoices.add(i, null);
+            }
+        }
         idsOfShopChoices.set(index, idOfShopChoice);
     }
 
     public Integer getIdOfShopChoiceAtIndex(int index) {
         return idsOfShopChoices.get(index);
+    }
+
+    private String toJsonString() {
+        // When a Student object is returned from the server, array items have no spaces (i.e [1,2,3,4,5].
+        // When converting array to String, there are spaces (i.e. [1, 2, 3, 4, 5]
+        // When comparing a Student object from a response from server and Student object directly from code, we need
+        // to have them consistent.
+        // Creating a String that has array items WITHOUT spaces so it can match server response
+        String idsOfShopChoicesAsString = "";
+        for (Integer i : idsOfShopChoices) {
+            idsOfShopChoicesAsString = idsOfShopChoicesAsString + i + ",";
+        }
+        // Because the last item will have an extra "comma", we need to remove the last character
+        idsOfShopChoicesAsString = idsOfShopChoicesAsString.substring(0, idsOfShopChoicesAsString.length() - 1);
+        return "{\"studentId\":" + studentId + "," +
+                "\"firstName\":\"" + firstName + "\"," +
+                "\"lastName\":\"" + lastName + "\"," +
+                "\"idOfEnrolledShop\":" + idOfEnrolledShop + "," +
+                "\"exploratoryGrade\":" + exploratoryGrade + "," +
+                "\"idsOfShopChoices\":" + "[" + idsOfShopChoicesAsString + "]}";
+    }
+
+    public JSONObject toJSON() {
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("id", studentId);
+        jsonObject.put("firstName", firstName);
+        jsonObject.put("lastName", lastName);
+        jsonObject.put("idOfEnrolled", idOfEnrolledShop);
+        jsonObject.put("exploratoryGrade", exploratoryGrade);
+        jsonObject.put("idsOfShopChoices", idsOfShopChoices.toString());
+        return jsonObject;
+    }
+    @Override
+    public String toString() {
+        return toJsonString();
+//        return "Student{" +
+//                "studentId=" + studentId +
+//                ", firstName='" + firstName + '\'' +
+//                ", lastName='" + lastName + '\'' +
+//                ", idOfEnrolledShop=" + idOfEnrolledShop +
+//                ", exploratoryGrade=" + exploratoryGrade +
+//                ", idsOfShopChoices=" + idsOfShopChoices +
+//                '}';
+    }
+
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Student student = (Student) o;
+
+        if (!studentId.equals(student.studentId)) return false;
+        if (!firstName.equals(student.firstName)) return false;
+        if (!lastName.equals(student.lastName)) return false;
+        if (!Objects.equals(idOfEnrolledShop, student.idOfEnrolledShop))
+            return false;
+        if (!Objects.equals(exploratoryGrade, student.exploratoryGrade))
+            return false;
+        return Objects.equals(idsOfShopChoices, student.idsOfShopChoices);
+    }
+
+    @Override
+    public int hashCode() {
+        int result = studentId.hashCode();
+        result = 31 * result + firstName.hashCode();
+        result = 31 * result + lastName.hashCode();
+        return result;
     }
 }
