@@ -1,7 +1,7 @@
-package info.oldcolony.shopplacementapp.controllers;
+package info.oldcolony.test.testdatageneration;
 
+import info.oldcolony.shopplacementapp.controllers.TestStudentRepository;
 import info.oldcolony.shopplacementapp.model.student.Student;
-import info.oldcolony.test.testdatageneration.TestDataGenerator;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.persistence.Entity;
@@ -32,9 +32,9 @@ public class TestStudent extends Student implements TestablePerson {
         for (int i = 0; i < numberOfStudents; i++) {
             TestStudent testStudent = new TestStudent();
             testStudent.setExploratoryGrade(TestDataGenerator.getRandomDouble(100));
-            Integer[] randomIndices = TestDataGenerator.getRandomArrayOfIntegers(0, NUMBER_OF_SHOPS);
-            for (int j = 0; j < randomIndices.length; j++) {
-                testStudent.setIdOfShopChoiceAtIndex(j, randomIndices[j]);
+            List<Integer> randomIndices = TestDataGenerator.getRandomArrayOfIntegers(0, NUMBER_OF_SHOPS);
+            for (int j = 0; j < randomIndices.size(); j++) {
+                testStudent.setIdOfShopChoiceAtIndex(j, randomIndices.get(j));
             }
             allStudents.add(testStudent);
         }

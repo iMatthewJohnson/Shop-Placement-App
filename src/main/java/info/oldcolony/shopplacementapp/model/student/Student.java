@@ -1,7 +1,6 @@
 package info.oldcolony.shopplacementapp.model.student;
 
 import info.oldcolony.shopplacementapp.RepositoryElement;
-import org.json.JSONObject;
 import org.springframework.lang.NonNull;
 import org.springframework.lang.Nullable;
 
@@ -108,47 +107,17 @@ public class Student implements RepositoryElement {
         return idsOfShopChoices.get(index);
     }
 
-    private String toJsonString() {
-        // When a Student object is returned from the server, array items have no spaces (i.e [1,2,3,4,5].
-        // When converting array to String, there are spaces (i.e. [1, 2, 3, 4, 5]
-        // When comparing a Student object from a response from server and Student object directly from code, we need
-        // to have them consistent.
-        // Creating a String that has array items WITHOUT spaces so it can match server response
-        String idsOfShopChoicesAsString = "";
-        for (Integer i : idsOfShopChoices) {
-            idsOfShopChoicesAsString = idsOfShopChoicesAsString + i + ",";
-        }
-        // Because the last item will have an extra "comma", we need to remove the last character
-        idsOfShopChoicesAsString = idsOfShopChoicesAsString.substring(0, idsOfShopChoicesAsString.length() - 1);
-        return "{\"studentId\":" + studentId + "," +
+
+    @Override
+    public String toString() {
+        String theString =
+                "{\"studentId\":" + studentId + "," +
                 "\"firstName\":\"" + firstName + "\"," +
                 "\"lastName\":\"" + lastName + "\"," +
                 "\"idOfEnrolledShop\":" + idOfEnrolledShop + "," +
                 "\"exploratoryGrade\":" + exploratoryGrade + "," +
-                "\"idsOfShopChoices\":" + "[" + idsOfShopChoicesAsString + "]}";
-    }
-
-    public JSONObject toJSON() {
-        JSONObject jsonObject = new JSONObject();
-        jsonObject.put("id", studentId);
-        jsonObject.put("firstName", firstName);
-        jsonObject.put("lastName", lastName);
-        jsonObject.put("idOfEnrolled", idOfEnrolledShop);
-        jsonObject.put("exploratoryGrade", exploratoryGrade);
-        jsonObject.put("idsOfShopChoices", idsOfShopChoices.toString());
-        return jsonObject;
-    }
-    @Override
-    public String toString() {
-        return toJsonString();
-//        return "Student{" +
-//                "studentId=" + studentId +
-//                ", firstName='" + firstName + '\'' +
-//                ", lastName='" + lastName + '\'' +
-//                ", idOfEnrolledShop=" + idOfEnrolledShop +
-//                ", exploratoryGrade=" + exploratoryGrade +
-//                ", idsOfShopChoices=" + idsOfShopChoices +
-//                '}';
+                "\"idsOfShopChoices\":" + "[" + idsOfShopChoices + "]}";
+        return theString.replaceAll("\\s+",""); // Strip all whitespace
     }
 
 

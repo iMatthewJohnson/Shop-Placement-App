@@ -18,6 +18,14 @@ public class TestDataGenerator {
         return getRandomInt(max - min) + min;
     }
 
+    public static int getRandomInt(List<Integer> excludedNumbers) {
+        int randomInt = getRandomInt();
+        while (excludedNumbers.contains(randomInt)) {
+            randomInt = getRandomInt();
+        }
+        return randomInt;
+    }
+
     public static double getRandomDouble() {
          return Math.random();
     }
@@ -30,13 +38,13 @@ public class TestDataGenerator {
         return getRandomDouble(max - min) + min;
     }
 
-    public static Integer[] getRandomArrayOfIntegers(int min, int max) {
+    public static List<Integer> getRandomArrayOfIntegers(int min, int max) {
         ArrayList<Integer> list = new ArrayList<>();
         for (int i = min; i < max; i++) {
             list.add(i);
         }
         Collections.shuffle(list);
-        return list.toArray(new Integer[0]);
+        return list;
     }
 
 }

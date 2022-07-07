@@ -1,26 +1,23 @@
 package info.oldcolony.shopplacementapp.controllers.users;
 
-import info.oldcolony.shopplacementapp.controllers.TestStudent;
+import info.oldcolony.test.testdatageneration.TestStudent;
 import info.oldcolony.shopplacementapp.model.student.Student;
 
 import info.oldcolony.test.testhelpers.MockMvcRequestHelper;
 import info.oldcolony.test.testhelpers.TestUtilities;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.ResultActions;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+
 
 @SpringBootTest
 @AutoConfigureMockMvc

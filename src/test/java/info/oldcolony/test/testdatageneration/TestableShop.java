@@ -1,4 +1,4 @@
-package info.oldcolony.shopplacementapp.controllers;
+package info.oldcolony.test.testdatageneration;
 
 import info.oldcolony.test.testdatageneration.TestDataGenerator;
 
