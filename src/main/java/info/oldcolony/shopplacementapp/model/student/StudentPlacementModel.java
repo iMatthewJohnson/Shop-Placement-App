@@ -3,10 +3,13 @@ package info.oldcolony.shopplacementapp.model.student;
 import info.oldcolony.shopplacementapp.model.shop.Shop;
 import info.oldcolony.shopplacementapp.model.shop.ShopRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import java.util.Collection;
 import java.util.Optional;
+//TODO: Add documentation
 
+@Component
 public class StudentPlacementModel {
 
         @Autowired
@@ -28,10 +31,10 @@ public class StudentPlacementModel {
                 student.setIdOfEnrolledShop(null);
                 int choice = 0;
                 Integer highestChoiceId = student.getIdOfShopChoiceAtIndex(choice);
-                Optional<Shop> highestChoiceShop = shopRepository.findById(highestChoiceId.intValue());
+                Optional<Shop> highestChoiceShop = shopRepository.findById(highestChoiceId);
                 while (highestChoiceShop.isPresent() && highestChoiceShop.get().enrollStudentWithId(student.getStudentId())) {
                     highestChoiceId = student.getIdOfShopChoiceAtIndex(++choice);
-                    highestChoiceShop =  shopRepository.findById(highestChoiceId.intValue());
+                    highestChoiceShop =  shopRepository.findById(highestChoiceId);
                 }
             }
             return studentList;

@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-
+//TODO: Add documentation
 @Entity
 @Table(name="students")
 public class Student extends RepositoryElement {
@@ -82,7 +82,7 @@ public class Student extends RepositoryElement {
     }
 
     public List<Integer> getIdsOfShopChoices() {
-        return new ArrayList<Integer>(this.idsOfShopChoices);
+        return new ArrayList<>(this.idsOfShopChoices);
     }
 
     public void setIdsOfShopChoices(List<Integer> idsOfShopChoices) {

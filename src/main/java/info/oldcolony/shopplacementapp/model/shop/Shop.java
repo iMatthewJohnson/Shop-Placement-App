@@ -5,7 +5,7 @@ import info.oldcolony.shopplacementapp.RepositoryElement;
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
-
+//TODO: Add documentation
 @Entity
 @Table(name="shops")
 public class Shop extends RepositoryElement {
@@ -15,7 +15,7 @@ public class Shop extends RepositoryElement {
     private String name;
     private Integer capacity;
     @ElementCollection
-    private List<Integer> idsOfStudentsEnrolled;
+    private final List<Integer> idsOfStudentsEnrolled = new ArrayList<>();
 
     public Shop() {
         super();

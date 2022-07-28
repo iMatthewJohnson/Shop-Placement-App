@@ -1,7 +1,6 @@
 package info.oldcolony.shopplacementapp.model.admin;
 
 import info.oldcolony.shopplacementapp.model.ShopPlacementModel;
-import info.oldcolony.shopplacementapp.model.admin.Admin;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.lang.NonNull;
@@ -10,7 +9,7 @@ import org.springframework.stereotype.Component;
 
 import java.util.List;
 import java.util.Optional;
-
+//TODO: Add documentation
 @Component
 public class AdminDataModel extends ShopPlacementModel<Admin> {
 

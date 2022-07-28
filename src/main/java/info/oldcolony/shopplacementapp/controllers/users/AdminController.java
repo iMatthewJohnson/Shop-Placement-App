@@ -4,10 +4,9 @@ import info.oldcolony.shopplacementapp.controllers.MainController;
 import info.oldcolony.shopplacementapp.model.admin.Admin;
 import info.oldcolony.shopplacementapp.model.admin.AdminDataModel;
 import info.oldcolony.shopplacementapp.model.shop.ShopDataModel;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 /**
  * Spring REST controller class that handles all HTTP request for the Admin resource, including adding, removing,
@@ -54,6 +53,4 @@ public class AdminController extends MainController<Admin> {
     }
 
     //endregion
-
-
 }

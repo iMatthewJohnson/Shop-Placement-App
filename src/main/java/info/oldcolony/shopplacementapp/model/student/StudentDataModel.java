@@ -8,7 +8,7 @@ import org.springframework.stereotype.Component;
 
 import java.util.List;
 import java.util.Optional;
-
+//TODO: Add documentation
 @Component
 public class StudentDataModel extends ShopPlacementModel<Student> {
 
