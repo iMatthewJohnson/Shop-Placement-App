@@ -12,7 +12,7 @@ import java.util.Objects;
 
 @Entity
 @Table(name="students")
-public class Student implements RepositoryElement {
+public class Student extends RepositoryElement {
     @Id
     private Integer studentId;
     private String firstName;

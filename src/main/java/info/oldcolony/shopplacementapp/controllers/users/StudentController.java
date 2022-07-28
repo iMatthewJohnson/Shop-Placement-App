@@ -27,31 +27,27 @@ public class StudentController extends MainController<Student> {
 
     //region POST requests
 
-    /**
-     * Adds a single student to the application
-     * @param id REQUIRED Student's student ID
-     * @param firstName REQUIRED Student's first name
-     * @param lastName REQUIRED Student's last name
-     * @param idOfEnrolledShop OPTIONAL The ID of the Shop student is enrolled in
-     * @param exploratoryGrade OPTIONAL Student's exploratory grade
-     * @param idsOfShopChoices OPTIONAL List of IDs of the shops the student has selected in order of priority (i.e.
-     *                         index 0 is 1st choice, index 1 is second choice, etc)
-     */
-    @PostMapping
-    public void addStudent(@RequestParam Integer id,
-                           @RequestParam String firstName,
-                           @RequestParam String lastName,
-                           @RequestParam (required = false) Integer idOfEnrolledShop,
-                           @RequestParam (required = false) Double exploratoryGrade,
-                           @RequestParam (required = false) List<Integer> idsOfShopChoices) {
-        Student newStudent = new Student(id, firstName, lastName, idOfEnrolledShop, exploratoryGrade, idsOfShopChoices);
-        Student addedStudent = model.add(newStudent);
-        if (idOfEnrolledShop != null) shopModel.enrollStudentInShop(addedStudent, idOfEnrolledShop);
+        /**
+         * Adds a single student to the application
+         * @param id REQUIRED Student's student ID
+         * @param firstName REQUIRED Student's first name
+         * @param lastName REQUIRED Student's last name
+         * @param idOfEnrolledShop OPTIONAL The ID of the Shop student is enrolled in
+         * @param exploratoryGrade OPTIONAL Student's exploratory grade
+         * @param idsOfShopChoices OPTIONAL List of IDs of the shops the student has selected in order of priority (i.e.
+         *                         index 0 is 1st choice, index 1 is second choice, etc)
+         */
+        @PostMapping
+        public void addStudent(@RequestParam Integer id,
+                               @RequestParam String firstName,
+                               @RequestParam String lastName,
+                               @RequestParam (required = false) Integer idOfEnrolledShop,
+                               @RequestParam (required = false) Double exploratoryGrade,
+                               @RequestParam (required = false) List<Integer> idsOfShopChoices) {
+            Student newStudent = new Student(id, firstName, lastName, idOfEnrolledShop, exploratoryGrade, idsOfShopChoices);
+            Student addedStudent = model.add(newStudent);
+            if (idOfEnrolledShop != null) shopModel.enrollStudentInShop(addedStudent, idOfEnrolledShop);
     }
-
-    //endregion
-
-    //region PATCH requests
 
     /**
      * Updates a single student's information

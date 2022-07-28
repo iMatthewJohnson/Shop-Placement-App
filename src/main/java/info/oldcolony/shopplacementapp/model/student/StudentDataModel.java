@@ -28,7 +28,7 @@ public class StudentDataModel extends ShopPlacementModel<Student> {
             if (lastName != null)student.setLastName(lastName);
             if (idOfEnrolledShop != null) student.setIdOfEnrolledShop(idOfEnrolledShop);
             if (idsOfShopChoices != null) student.setIdsOfShopChoices(idsOfShopChoices);
-            if (exploratoryGrade != null)student.setExploratoryGrade(exploratoryGrade);
+            if (exploratoryGrade != null) student.setExploratoryGrade(exploratoryGrade);
             studentRepository.save(student);
         }
     }

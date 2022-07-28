@@ -9,7 +9,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name="admins")
-public class Admin implements RepositoryElement {
+public class Admin extends RepositoryElement {
 
     @Id
     @GeneratedValue
@@ -21,7 +21,8 @@ public class Admin implements RepositoryElement {
         super();
     }
 
-    public Admin(String firstName, String lastName) {
+    public Admin(Integer id, String firstName, String lastName) {
+        this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
     }

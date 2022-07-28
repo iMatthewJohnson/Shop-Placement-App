@@ -8,7 +8,7 @@ import java.util.List;
 
 @Entity
 @Table(name="shops")
-public class Shop implements RepositoryElement {
+public class Shop extends RepositoryElement {
     @Id
     @GeneratedValue
     private Integer id;
