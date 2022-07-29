@@ -1,6 +1,7 @@
 package info.oldcolony.shopplacementapp.model;
 
 import info.oldcolony.shopplacementapp.RepositoryElement;
+
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Component;
 

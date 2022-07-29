@@ -2,6 +2,7 @@ package info.oldcolony.shopplacementapp.model.student;
 
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
+
 import java.util.Collection;
 
 // This will be AUTO IMPLEMENTED by Spring into a Bean called studentRepository

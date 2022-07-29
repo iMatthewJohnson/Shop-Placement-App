@@ -1,10 +1,12 @@
 package info.oldcolony.shopplacementapp.model.student;
 
 import info.oldcolony.shopplacementapp.RepositoryElement;
+
 import org.springframework.lang.NonNull;
 import org.springframework.lang.Nullable;
 
 import javax.persistence.*;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;

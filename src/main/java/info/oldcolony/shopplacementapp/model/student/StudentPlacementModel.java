@@ -7,7 +7,7 @@ import org.springframework.stereotype.Component;
 
 import java.util.Collection;
 import java.util.Optional;
-//TODO: Add documentation
+//TODO: Add documentation. Consider refactoring into different class
 
 @Component
 public class StudentPlacementModel {
